@@ -4,29 +4,25 @@ package po74.fomenkov.oop.model;
 //todo ВСЕ ЦИКЛЫ ДО SIZE!!!!!!!!!!!!!!!!!
 //todo СТРОКИ СРАВНИВАЮТСЯ С ПОМОЩЬЮ equals()!!!!!!!!
 public class Individual {
-    public int size;
-    public Account[] accounts;
-    public int countElementsInMassive;
+    int size;
+    Account[] accounts;
+
     //todo конструкторы public
-    Individual(){
-        Account[] accounts = new Account[16];
-        this.accounts = accounts;
-        this.size = 0; //todo литерады это зло
+    public Individual(){
+        Individual individual = new Individual(16);
+        this.accounts = individual.accounts;
     }
 
     //todo не путай size и capacity
-    Individual(int size){
-        Account[] accounts = new Account[size];
-        this.size = size;
+    public Individual(int capacity){
+        Account[] accounts = new Account[capacity];
         this.accounts = accounts;
     }
 
-    Individual(Account[] accountsOld){
-        Account[] accountsNew = new Account[(accountsOld.length)*2];
+    public Individual(Account[] accountsOld){
+        Account[] accountsNew = new Account[accountsOld.length];
         //todo System.arraycopy()
-        for(int i=0; i<accountsOld.length; i++){
-            accountsNew[i] = accountsOld[i];
-        }
+        System.arraycopy(accountsOld, 0, accountsNew, 0,accountsOld.length);
         this.accounts = accountsNew;
 
     }
@@ -34,22 +30,21 @@ public class Individual {
     public boolean add(Account account){
         //todo if (size == accounts.length)
         //todo переделывай
-        Account[] accountsNew = new Account[accounts.length * 2];
-        accountsNew = accounts;
-        this.accounts = accountsNew;
-        return false;
-
+        doublingArrayAccountsIfFull();
+        accounts[size] = account;
+        size++;
+        System.out.println(size);
+        return true;
     }
 
     public boolean add(int index, Account account){
         //todo элементы нужно сдвигать
-        if (accounts[index].number == "")
-        {
-            accounts[index] = account;
-            // countElementsInMassive++;
-            return true;
-        }
-        return false;
+        doublingArrayAccountsIfFull();
+        shiftOneElement(index, "right");
+        accounts[index] = account;
+        size++;
+        System.out.println(size);
+        return true;
     }
 
     public Account get(int index) {
@@ -59,17 +54,16 @@ public class Individual {
     public Account get(String accountNumber){
         int foundedAccIndex;
 
-        for (int i = 0; i < accounts.length; i++){
-            if (accounts[i].number == accountNumber)
+        for (int i = 0; i < size; i++){
+            if (accounts[i].number.equals(accountNumber))
                 return accounts[i];
-
         }
         return null;
     }
 
     public boolean hasAccount(String accountNumber){
-        for (int i = 0; i < accounts.length; i++){
-            if (accounts[i].number == accountNumber)
+        for (int i = 0; i < size; i++){
+            if (accounts[i].number.equals(accountNumber))
                 return true;
         }
         return false;
@@ -82,78 +76,88 @@ public class Individual {
     public Account remove(int index){
         //todo size--
         Account removedAccount = accounts[index];
-
+        shiftOneElement(index, "left");
         //todo System.arraycopy()
-        for (int i = index; i < accounts.length-1; i++)
-            accounts[i] = accounts[i+1];
+        accounts[size] = null;
+        size--;
         return removedAccount;
     }
 
     //todo дубль цикла с условием. Запили приватный метод, который возвращает индекс найденного эелмента
     //todo shift - вынеси в отдельный приватный метод
     public Account remove(String numberAccount) {
-        for (int i = 0; i < accounts.length; i++){
-            if (accounts[i].number == numberAccount){
-                Account removedAccount = accounts[i];
-                for (int j = i; j < accounts.length-1; j++)
-                    accounts[j] = accounts[j+1];
-                return removedAccount;
-            }
-        }
-        return null;
+        return remove(findElemByNumber(numberAccount));
     }
 
     public int size(){
-        countElementsInMassive = 0;
-        for (int i = 0; i < accounts.length; i++){
-            if (accounts[i].number != "") countElementsInMassive++;
-        }
-        return countElementsInMassive;
+        return size;
         //todo return size;
     }
 
     public Account[] getAccounts(){
-
-
         Account[] returnedAccounts = new Account[size()];
         //todo System.arraycopy()
-        int indexOfNewArray = 0;
-        for (int i = 0; i < accounts.length; i++){
-
-            if(accounts[i].number != "") {
-                returnedAccounts[indexOfNewArray] = accounts[i];
-                indexOfNewArray++;
-            }
-        }
-
+        System.arraycopy(accounts,0,returnedAccounts,0,size);
         return returnedAccounts;
     }
 
-    public Account[] sortedAccountsByBalance(){
+    public Account[] sortedByBalanceAccounts(){
         //todo нужно возвращться отсортированную копию массива
+        Account[] sortedAccounts = new Account[accounts.length];
+        System.arraycopy(accounts,0,sortedAccounts,0,size);
         Account tmp;
-        for (int i = 0; i < accounts.length-1; i++){
-            for (int j = 0; j < accounts.length-1;j++) {
+        for (int i = 0; i < size-1; i++){
+            for (int j = 0; j < size-1;j++) {
 
-                if(accounts[j].balance>accounts[j+1].balance){
-                    tmp = accounts[j+1];
-                    accounts[j+1] = accounts[j];
-                    accounts[j] = tmp;
+                if(sortedAccounts[j].balance>sortedAccounts[j+1].balance){
+                    tmp = sortedAccounts[j+1];
+                    sortedAccounts[j+1] = sortedAccounts[j];
+                    sortedAccounts[j] = tmp;
                     tmp = null;
                 }
             }
-
-
         }
-        return accounts;
+        return sortedAccounts;
     }
 
     public double totalBalance(){
         double totalBalance = 0;
-        for (int i = 0; i < accounts.length; i++){
+        for (int i = 0; i < size; i++){
             totalBalance += accounts[i].balance;
         }
         return totalBalance;
     }
+
+    private int findElemByNumber(String number){
+        for (int i = 0; i < size; i++){
+            if (number.equals(accounts[i].number)) return i;
+        }
+        return -1;
+    }
+
+    private void shiftOneElement(int index, String side){
+        if (side.equals("right")){
+            for (int i = (size-1); i >= index; i--){
+                accounts[i+1] = accounts[i];
+            }
+        }
+        if (side.equals("left")) System.arraycopy(accounts, index+1, accounts,index,(size-index));
+    }
+
+
+    private void doublingArrayAccountsIfFull(){
+        if (size == accounts.length){
+        Account[] accountsNew = new Account[accounts.length * 2];
+        System.arraycopy(accounts,0,accountsNew,0,size);
+        this.accounts = accountsNew;
+        }
+    }
+
+    public void showDetailsAccounts(){
+        for (int i = 0; i < size; i++){
+            System.out.println("Index: " + i + " | Number: " + accounts[i].number + " | Balance: " + accounts[i].balance);
+        }
+    }
+
 
 }

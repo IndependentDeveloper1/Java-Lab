@@ -1,109 +1,124 @@
 package po74.fomenkov.oop.model;
 
 public class AccountManager {
-    public Individual[] individuals;
-    public int size;
-    public int countIndividuals;
+    Individual[] individuals;
+    int size;
 
-    AccountManager(int countIndividuals){
-        Individual[] individuals = new Individual[size];
+    public AccountManager(int capacity){
+        Individual[] individuals = new Individual[capacity];
         this.individuals = individuals;
     }
 
-    AccountManager(Individual[] individuals){
-        Individual[] individualsNew = new Individual[individuals.length];
-        for(int i=0; i<individuals.length; i++)
-            individualsNew[i] = individuals[i];
-        this.individuals = individualsNew;
+    public AccountManager(Individual[] individualsOld) {
+        Individual[] individualsNew = new Individual[individualsOld.length];
+        System.arraycopy(individualsOld, 0, individualsNew, 0, individualsOld.length);
+        this.individuals = individualsOld;
     }
 
     public boolean add(Individual individual){
-
-        for (int i = 0; i < individuals.length; i++){
-            if (individuals[i].accounts == null) {
-                individuals[i] = individual;
-                //  countElementsInMassive++;
-                return true;
-            }
-        }
-        Individual[] individualsNew = new Individual[individuals.length * 2];
-        individualsNew = individuals;
-        this.individuals = individualsNew;
-        return false;
-
+        doublingArrayIndividualsIfFull();
+        individuals[size] = individual;
+        size++;
+        System.out.println(size);
+        return true;
     }
 
     public boolean add(int index, Individual individual){
-        if (individuals[index].accounts[0] == null)
-        {
-            individuals[index] = individual;
-            return true;
-        }
-        return false;
+        doublingArrayIndividualsIfFull();
+        shiftOneElement(index, "right");
+        individuals[index] = individual;
+        size++;
+        System.out.println(size);
+        return true;
     }
 
     public Individual get(int index) {
         return individuals[index];
     }
 
+
     public Individual set(int index, Individual individual){
-        return (individuals[index] = individual);
+        Individual changedIdividual = individuals[index];
+         individuals[index] = individual;
+         return changedIdividual;
     }
 
     public Individual remove(int index){
         Individual removedIndividual = individuals[index];
-        for (int i = index; i < individuals.length-1; i++)
-            individuals[i] = individuals[i+1];
+        shiftOneElement(index, "left");
+        individuals[size] = null;
+        size--;
         return removedIndividual;
     }
 
     public int size(){
-        countIndividuals = 0;
-        for (int i = 0; i < individuals.length; i++){
-            for (int j = 0; j < individuals[i].accounts.length; j++){
-                if (individuals[i].accounts[j].number != "") {
-                    countIndividuals++;
-                    break;
-                }
-            }
-        }
-        return countIndividuals;
+        return size;
     }
 
     public Individual[] getIndividuals(){
-
-        Individual[] returnedIndividual = new Individual[size()];
-        int indexOfNewArray = 0;
-        for (int i = 0; i < individuals.length; i++){
-            returnedIndividual[i] = individuals[i];
-        }
-
-        return returnedIndividual;
+        Individual[] returnedIndividuals = new Individual[size];
+        System.arraycopy(individuals,0,returnedIndividuals,0,size);
+        return returnedIndividuals;
     }
 
-    public Individual[] sortedIndividualsByBalance(){
+    public Individual[] sortedByBalanceIndividuals(){
+        Individual[] sortedIndividuals = new Individual[individuals.length];
+        System.arraycopy(individuals,0,sortedIndividuals,0,size);
         Individual tmp;
-        for (int i = 0; i < individuals.length-1; i++){
-            for (int j = 0; j < individuals.length-1;j++) {
+        for (int i = 0; i < size-1; i++){
+            for (int j = 0; j < size-1;j++) {
 
-                if(individuals[j].totalBalance()>individuals[j+1].totalBalance()){
-                    tmp = individuals[j+1];
-                    individuals[j+1] = individuals[j];
-                    individuals[j] = tmp;
+                if(sortedIndividuals[j].totalBalance()>sortedIndividuals[j+1].totalBalance()){
+                    tmp = sortedIndividuals[j+1];
+                    sortedIndividuals[j+1] = sortedIndividuals[j];
+                    sortedIndividuals[j] = tmp;
                     tmp = null;
                 }
             }
         }
-        return individuals;
+        return sortedIndividuals;
     }
 
-    public double totalBalance(){
-        double totalBalance = 0;
-        for (int i = 0; i < individuals.length; i++){
-            for (int j = 0; j < individuals[i].accounts.length; j++){
-                totalBalance += individuals[i].accounts[j].balance;
+    /* Мало информации в методичке
+    public Account getAccount(String accountNumber){
+        for (int i = 0; i < size; i++){
+            if (accounts[i].number.equals(accountNumber))
+                return true;
+        }
+        return false;
+    }
+
+    public Account removeAccount(String accountNumber){
+        return remove(findElemByNumber(numberAccount));
+    }
+
+    public Account setAccount(String accountNumber, Account account){
+        Individual changedAccount = individuals[index];
+        individuals[index] = individual;
+        return changedIdividual;
+    }
+*/
+    private void shiftOneElement(int index, String side){
+        if (side.equals("right")){
+            for (int i = (size-1); i >= index; i--){
+                individuals[i+1] = individuals[i];
             }
         }
-        return totalBalance;
+        if (side.equals("left")) System.arraycopy(individuals, index+1, individuals,index,(size-index));
     }
+
+
+    private void doublingArrayIndividualsIfFull(){
+        if (size == individuals.length){
+            Individual[] individualsNew = new Individual[this.individuals.length * 2];
+            System.arraycopy(this.individuals,0,individualsNew,0,size);
+            this.individuals = individualsNew;
+        }
+    }
+
+    /*public void showDetailsAccounts(){
+        for (int i = 0; i < size; i++){
+            System.out.println("Index: " + i + " | Number: " + individuals[i].number + " | Balance: " + individuals[i].balance);
+        }
+    }*/
 }
