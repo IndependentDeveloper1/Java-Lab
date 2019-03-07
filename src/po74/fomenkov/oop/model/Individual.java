@@ -137,7 +137,14 @@ public class Individual {
 
     private void shiftOneElement(int index, String side){
         if (side.equals("right")){
-            for (int i = (size-1); i >= index; i--){
+            int u = -1;
+
+            for (int i = index; i < accounts.length;i++ ){
+                if ((accounts[i])!=null) u++;
+                else break;
+            }
+            System.out.println("xer" + u);
+            for (int i = (size-u); i >= index; i--){
                 accounts[i+1] = accounts[i];
             }
         }

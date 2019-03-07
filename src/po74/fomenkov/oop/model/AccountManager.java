@@ -25,7 +25,7 @@ public class AccountManager {
 
     public boolean add(int index, Individual individual){
         doublingArrayIndividualsIfFull();
-        shiftOneElement(index, "right");
+        shiftOneIndividual(index, "right");
         individuals[index] = individual;
         size++;
         System.out.println(size);
@@ -45,7 +45,7 @@ public class AccountManager {
 
     public Individual remove(int index){
         Individual removedIndividual = individuals[index];
-        shiftOneElement(index, "left");
+        shiftOneIndividual(index, "left");
         individuals[size] = null;
         size--;
         return removedIndividual;
@@ -79,26 +79,34 @@ public class AccountManager {
         return sortedIndividuals;
     }
 
-    /* Мало информации в методичке
+    // Мало информации в методичке не понятно
+    /*
     public Account getAccount(String accountNumber){
         for (int i = 0; i < size; i++){
-            if (accounts[i].number.equals(accountNumber))
-                return true;
+            for (int j = 0; j < individuals[i].size(); j++){
+            if (individuals[i].accounts[j].number.equals(accountNumber))
+                return individuals[i].accounts[j];
         }
-        return false;
+        }
+        return null;
     }
 
     public Account removeAccount(String accountNumber){
-        return remove(findElemByNumber(numberAccount));
+
+        Account removedAccount = getAccount(accountNumber);
+        System.arraycopy(accounts, index+1, accounts,index,(size-index));
+
+
+        return removedAccount;
     }
 
     public Account setAccount(String accountNumber, Account account){
-        Individual changedAccount = individuals[index];
-        individuals[index] = individual;
-        return changedIdividual;
+        Account changedAccount = getAccount(accountNumber);
+         = account;
+        return changedAccount;
     }
 */
-    private void shiftOneElement(int index, String side){
+    private void shiftOneIndividual(int index, String side){
         if (side.equals("right")){
             for (int i = (size-1); i >= index; i--){
                 individuals[i+1] = individuals[i];
@@ -115,6 +123,8 @@ public class AccountManager {
             this.individuals = individualsNew;
         }
     }
+
+
 
     /*public void showDetailsAccounts(){
         for (int i = 0; i < size; i++){

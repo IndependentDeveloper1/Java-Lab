@@ -31,12 +31,14 @@ public class Test {
 
         //Test #2 (class Individual)
         // Working
-/*
+
         Account account0 = new Account("12", 534.48);
         Account account1 = new Account("432", 478.5);
         Account account2 = new Account("164", 456.155);
         Account account3 = new Account("864", 584.234);
         Account account4 = new Account("54", 6789.4561);
+        Account account5 = new Account();
+        Account account6 = new Account();
 
 
 
@@ -47,8 +49,9 @@ public class Test {
         individual.add(account0);
         individual.add(account1);
         individual.add(account2);
-        individual.add(account3);
+        individual.add(account5);
         individual.add(2,account4);
+        individual.add(account5);
 
         individual.showDetailsAccounts();
 
@@ -63,7 +66,7 @@ public class Test {
 
 
         System.out.println(individual.totalBalance());
-*/
+
 
         // Test #3 (class AccountManager)
         //Not working yet
