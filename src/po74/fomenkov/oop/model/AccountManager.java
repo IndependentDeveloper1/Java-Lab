@@ -79,7 +79,7 @@ public class AccountManager {
         return sortedIndividuals;
     }
 
-    // Мало информации в методичке не понятно
+    // Мало информации в методичке, не понятно //
     /*
     public Account getAccount(String accountNumber){
         for (int i = 0; i < size; i++){
