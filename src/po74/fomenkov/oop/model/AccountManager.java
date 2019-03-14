@@ -1,6 +1,7 @@
 package po74.fomenkov.oop.model;
 
 public class AccountManager {
+    //todo private
     Individual[] individuals;
     int size;
 
@@ -62,9 +63,10 @@ public class AccountManager {
     }
 
     public Individual[] sortedByBalanceIndividuals(){
+        //todo getIndividuals()
         Individual[] sortedIndividuals = new Individual[individuals.length];
         System.arraycopy(individuals,0,sortedIndividuals,0,size);
-        Individual tmp;
+        Individual tmp; //todo имя гавно
         for (int i = 0; i < size-1; i++){
             for (int j = 0; j < size-1;j++) {
 
@@ -106,7 +108,7 @@ public class AccountManager {
         return changedAccount;
     }
 */
-    private void shiftOneIndividual(int index, String side){
+    private void shiftOneIndividual(int index, String side /* todo boolean */){
         if (side.equals("right")){
             for (int i = (size-1); i >= index; i--){
                 individuals[i+1] = individuals[i];
@@ -115,7 +117,7 @@ public class AccountManager {
         if (side.equals("left")) System.arraycopy(individuals, index+1, individuals,index,(size-index));
     }
 
-
+    //todo имя гавно
     private void doublingArrayIndividualsIfFull(){
         if (size == individuals.length){
             Individual[] individualsNew = new Individual[this.individuals.length * 2];

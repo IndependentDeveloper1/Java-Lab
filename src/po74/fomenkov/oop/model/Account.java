@@ -9,7 +9,6 @@ public class Account {
     public Account(){
         this("",0);
             }
-    //todo конструкторы должны вызывать друг друга
     public Account(String number, double balance){
         this.number = number;
         this.balance = balance;
