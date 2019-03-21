@@ -80,39 +80,36 @@ public class AccountManager {
     }
 
 
-    //todo следующие три метода - в цикле hasAccount а затем соответсвующий метод
+    //todo следующие три метода - в цикле hasAccount а затем соответсвующий метод //сделал
     public Account getAccount(String accountNumber){
         for (int i = 0; i < size; i++){
-            if (individuals[i].returnElemByNumber(accountNumber) !=(-1))
-                return (individuals[i].get(individuals[i].returnElemByNumber(accountNumber)));
+            if (individuals[i].hasAccount(accountNumber))
+                return (individuals[i].get(accountNumber));
         }
         return null;
     }
 
     public Account removeAccount(String accountNumber){
-        Account removedAccount = getAccount(accountNumber);
-        Individual individual = new Individual();
-        for (int i = 0; i < size; i++) {
-            if (individuals[i].returnElemByNumber(accountNumber) != (-1)) {
-                individual = individuals[i];
-                individual.remove(accountNumber);
-                individuals[i] = individual;
-                return removedAccount;
+        if (getAccount(accountNumber) != null)
+        {
+        for (int i = 0; i < size; i++)
+        {
+            if (individuals[i].hasAccount(accountNumber)) {
+                return individuals[i].remove(accountNumber);
             }
+        }
         }
        return null;
     }
 
     public Account setAccount(String accountNumber, Account account){
-        Account changedAccount = getAccount(accountNumber);
-        Individual individual = new Individual();
+        if (getAccount(accountNumber) != null)
+        {
         for (int i = 0; i < size; i++) {
-            if (individuals[i].returnElemByNumber(accountNumber) != (-1)) {
-                individual = individuals[i];
-                individual.set();
-                individuals[i] = individual;
-                return changedAccount;
+            if (individuals[i].hasAccount(accountNumber)) {
+                return individuals[i].set( ,account);
             }
+        }
         }
         return null;
     }
