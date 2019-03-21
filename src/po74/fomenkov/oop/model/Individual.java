@@ -1,26 +1,20 @@
 package po74.fomenkov.oop.model;
 
-//todo атрибуты - приватные
-//todo ВСЕ ЦИКЛЫ ДО SIZE!!!!!!!!!!!!!!!!!
 public class Individual {
     private int size;
     private Account[] accounts;
     private final static int CAPACITY_DEFAULT = 16;
 
-    //todo литералы - зло
-    //todo этот конструктор должен вызывать следующий
     public Individual(){
         this(CAPACITY_DEFAULT);
     }
 
-    public Individual(int capacity){
-        Account[] accounts = new Account[capacity];
-        this.accounts = accounts;
+    public Individual(int capacity) {
+        this.accounts = new Account[capacity];
     }
 
     public Individual(Account[] accountsOld){
         Account[] accountsNew = new Account[accountsOld.length];
-        //todo System.arraycopy()
         System.arraycopy(accountsOld, 0, accountsNew, 0,accountsOld.length);
         this.accounts = accountsNew;
 
@@ -34,9 +28,8 @@ public class Individual {
     }
 
     public boolean add(int index, Account account){
-        //todo элементы нужно сдвигать
         expandArray(isFullArray());
-        shiftOneElement(index, true); //todo пусть 2-й параметр будет boolean
+        shiftOneElement(index, true);
         accounts[index] = account;
         size++;
         return true;
@@ -47,18 +40,15 @@ public class Individual {
     }
 
     public Account get(String accountNumber){
-        //todo findElemByNumber(accountNumber)
         return accounts[returnElemByNumber(accountNumber)];
     }
 
     public boolean hasAccount(String accountNumber){
-        //todo findElemByNumber(accountNumber)
         if (returnElemByNumber(accountNumber)!=(-1)) return true;
         return false;
     }
 
     public Account set(int index, Account account){
-        //todo возвращаешь удаленную ссылку, а не новую
         Account setAccount = accounts[index];
         accounts[index] = account;
         return setAccount;
@@ -90,7 +80,7 @@ public class Individual {
         //todo getAccounts()
         Account[] sortedAccounts = new Account[accounts.length];
         System.arraycopy(accounts,0,sortedAccounts,0,size);
-        Account swapBuf; //todo имя - гавно
+        Account swapBuf;
         for (int i = 0; i < size-1; i++){
             for (int j = 0; j < size-1;j++) {
 
@@ -130,7 +120,9 @@ public class Individual {
 
     }
 
+    //todo Имя - гавно
     private boolean isFullArray(){
+        //TODO пойми, что не так =)))))
         if (size == accounts.length) return true;
         return false;
     }
@@ -140,15 +132,6 @@ public class Individual {
         System.arraycopy(accounts,0,accountsNew,0,size);
         this.accounts = accountsNew;
     }
-
-    //todo имя гавно expand, check,
-    /*private void doublingArrayAccountsIfFull(){
-        if (size == accounts.length){
-        Account[] accountsNew = new Account[accounts.length * 2];
-        System.arraycopy(accounts,0,accountsNew,0,size);
-        this.accounts = accountsNew;
-        }
-    }*/
 
     public void showDetailsAccounts(){
         for (int i = 0; i < size; i++){

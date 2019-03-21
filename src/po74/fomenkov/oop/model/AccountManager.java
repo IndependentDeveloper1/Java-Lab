@@ -1,7 +1,6 @@
 package po74.fomenkov.oop.model;
 
 public class AccountManager {
-    //todo private
     private Individual[] individuals;
     private int size;
 
@@ -63,10 +62,9 @@ public class AccountManager {
     }
 
     public Individual[] sortedByBalanceIndividuals(){
-        //todo getIndividuals()
         Individual[] sortedIndividuals = getIndividuals();
         System.arraycopy(individuals,0,sortedIndividuals,0,size);
-        Individual swapBuff; //todo имя гавно
+        Individual swapBuff;
         for (int i = 0; i < size-1; i++){
             for (int j = 0; j < size-1;j++) {
 
@@ -82,6 +80,7 @@ public class AccountManager {
     }
 
 
+    //todo следующие три метода - в цикле hasAccount а затем соответсвующий метод
     public Account getAccount(String accountNumber){
         for (int i = 0; i < size; i++){
             if (individuals[i].returnElemByNumber(accountNumber) !=(-1))
@@ -118,23 +117,16 @@ public class AccountManager {
         return null;
     }
 
-    private void shiftOneIndividual(int index, boolean direction /* todo boolean */){
+    private void shiftOneIndividual(int index, boolean direction ){
         if (direction)
             System.arraycopy(individuals, index, individuals,index+1,(size-index));
         else
             System.arraycopy(individuals, index+1, individuals,index,(size-index));
     }
 
-    //todo имя гавно
-   /* private void doublingArrayIndividualsIfFull(){
-        if (size == individuals.length){
-            Individual[] individualsNew = new Individual[this.individuals.length * 2];
-            System.arraycopy(this.individuals,0,individualsNew,0,size);
-            this.individuals = individualsNew;
-        }
-    }*/
-
+    //todo Имя - гавно
     private boolean isFullArray(){
+        //TODO пойми, что не так =)))))
         if (size == individuals.length) return true;
         return false;
     }
@@ -145,15 +137,13 @@ public class AccountManager {
         this.individuals = individualsNew;
     }
 
-    public int returnIndividual(String accountNumber){
+    //todo индивидуала надо возвращать, а не индекс
+    public Individual returnIndividual(String accountNumber){
         for (int i = 0; i < size; i++){
             if (accountNumber.equals(accounts[i].getNumber(accounts[i]))) return i;
         }
         return -1;
     }
-
-
-    private
 
     /*public void showDetailsAccounts(){
         for (int i = 0; i < size; i++){
