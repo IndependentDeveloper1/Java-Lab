@@ -2,12 +2,14 @@ package po74.fomenkov.oop.model;
 
 //todo атрибуты - приватные
 public class Account {
-    String number;
-    double balance;
+    private String number;
+    private double balance;
+    private final static String NUMBER_DEFAULT = "";
+    private final static double BALANCE_DEFAULT = 0.0;
 
     //todo литералы - это зло
     public Account(){
-        this("",0);
+        this(NUMBER_DEFAULT,BALANCE_DEFAULT);
             }
     public Account(String number, double balance){
         this.number = number;

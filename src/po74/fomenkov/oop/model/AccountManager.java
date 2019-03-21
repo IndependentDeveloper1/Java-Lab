@@ -2,8 +2,8 @@ package po74.fomenkov.oop.model;
 
 public class AccountManager {
     //todo private
-    Individual[] individuals;
-    int size;
+    private Individual[] individuals;
+    private int size;
 
     public AccountManager(int capacity){
         Individual[] individuals = new Individual[capacity];
@@ -17,7 +17,7 @@ public class AccountManager {
     }
 
     public boolean add(Individual individual){
-        doublingArrayIndividualsIfFull();
+        expandArray(isFullArray());
         individuals[size] = individual;
         size++;
         System.out.println(size);
@@ -25,8 +25,8 @@ public class AccountManager {
     }
 
     public boolean add(int index, Individual individual){
-        doublingArrayIndividualsIfFull();
-        shiftOneIndividual(index, "right");
+        expandArray(isFullArray());
+        shiftOneIndividual(index, true);
         individuals[index] = individual;
         size++;
         System.out.println(size);
@@ -46,7 +46,7 @@ public class AccountManager {
 
     public Individual remove(int index){
         Individual removedIndividual = individuals[index];
-        shiftOneIndividual(index, "left");
+        shiftOneIndividual(index, false);
         individuals[size] = null;
         size--;
         return removedIndividual;
@@ -64,69 +64,96 @@ public class AccountManager {
 
     public Individual[] sortedByBalanceIndividuals(){
         //todo getIndividuals()
-        Individual[] sortedIndividuals = new Individual[individuals.length];
+        Individual[] sortedIndividuals = getIndividuals();
         System.arraycopy(individuals,0,sortedIndividuals,0,size);
-        Individual tmp; //todo имя гавно
+        Individual swapBuff; //todo имя гавно
         for (int i = 0; i < size-1; i++){
             for (int j = 0; j < size-1;j++) {
 
                 if(sortedIndividuals[j].totalBalance()>sortedIndividuals[j+1].totalBalance()){
-                    tmp = sortedIndividuals[j+1];
+                    swapBuff = sortedIndividuals[j+1];
                     sortedIndividuals[j+1] = sortedIndividuals[j];
-                    sortedIndividuals[j] = tmp;
-                    tmp = null;
+                    sortedIndividuals[j] = swapBuff;
+                    //swapBuff = null;
                 }
             }
         }
         return sortedIndividuals;
     }
 
-    // Мало информации в методичке, не понятно //
-    /*
+
     public Account getAccount(String accountNumber){
         for (int i = 0; i < size; i++){
-            for (int j = 0; j < individuals[i].size(); j++){
-            if (individuals[i].accounts[j].number.equals(accountNumber))
-                return individuals[i].accounts[j];
-        }
+            if (individuals[i].returnElemByNumber(accountNumber) !=(-1))
+                return (individuals[i].get(individuals[i].returnElemByNumber(accountNumber)));
         }
         return null;
     }
 
     public Account removeAccount(String accountNumber){
-
         Account removedAccount = getAccount(accountNumber);
-        System.arraycopy(accounts, index+1, accounts,index,(size-index));
-
-
-        return removedAccount;
+        Individual individual = new Individual();
+        for (int i = 0; i < size; i++) {
+            if (individuals[i].returnElemByNumber(accountNumber) != (-1)) {
+                individual = individuals[i];
+                individual.remove(accountNumber);
+                individuals[i] = individual;
+                return removedAccount;
+            }
+        }
+       return null;
     }
 
     public Account setAccount(String accountNumber, Account account){
         Account changedAccount = getAccount(accountNumber);
-         = account;
-        return changedAccount;
-    }
-*/
-    private void shiftOneIndividual(int index, String side /* todo boolean */){
-        if (side.equals("right")){
-            for (int i = (size-1); i >= index; i--){
-                individuals[i+1] = individuals[i];
+        Individual individual = new Individual();
+        for (int i = 0; i < size; i++) {
+            if (individuals[i].returnElemByNumber(accountNumber) != (-1)) {
+                individual = individuals[i];
+                individual.set();
+                individuals[i] = individual;
+                return changedAccount;
             }
         }
-        if (side.equals("left")) System.arraycopy(individuals, index+1, individuals,index,(size-index));
+        return null;
+    }
+
+    private void shiftOneIndividual(int index, boolean direction /* todo boolean */){
+        if (direction)
+            System.arraycopy(individuals, index, individuals,index+1,(size-index));
+        else
+            System.arraycopy(individuals, index+1, individuals,index,(size-index));
     }
 
     //todo имя гавно
-    private void doublingArrayIndividualsIfFull(){
+   /* private void doublingArrayIndividualsIfFull(){
         if (size == individuals.length){
             Individual[] individualsNew = new Individual[this.individuals.length * 2];
             System.arraycopy(this.individuals,0,individualsNew,0,size);
             this.individuals = individualsNew;
         }
+    }*/
+
+    private boolean isFullArray(){
+        if (size == individuals.length) return true;
+        return false;
+    }
+
+    private void expandArray(boolean expand){
+        Individual[] individualsNew = new Individual[individuals.length * 2];
+        System.arraycopy(individuals,0,individualsNew,0,size);
+        this.individuals = individualsNew;
+    }
+
+    public int returnIndividual(String accountNumber){
+        for (int i = 0; i < size; i++){
+            if (accountNumber.equals(accounts[i].getNumber(accounts[i]))) return i;
+        }
+        return -1;
     }
 
 
+    private
 
     /*public void showDetailsAccounts(){
         for (int i = 0; i < size; i++){
