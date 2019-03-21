@@ -19,7 +19,6 @@ public class AccountManager {
         expandArray(isFullArray());
         individuals[size] = individual;
         size++;
-        System.out.println(size);
         return true;
     }
 
@@ -28,7 +27,6 @@ public class AccountManager {
         shiftOneIndividual(index, true);
         individuals[index] = individual;
         size++;
-        System.out.println(size);
         return true;
     }
 
@@ -107,7 +105,7 @@ public class AccountManager {
         {
         for (int i = 0; i < size; i++) {
             if (individuals[i].hasAccount(accountNumber)) {
-                return individuals[i].set( ,account);
+                return individuals[i].set(individuals[i].getIndex(accountNumber) ,account);
             }
         }
         }
@@ -124,8 +122,8 @@ public class AccountManager {
     //todo Имя - гавно
     private boolean isFullArray(){
         //TODO пойми, что не так =)))))
-        if (size == individuals.length) return true;
-        return false;
+        //исправил
+        return (size == individuals.length);
     }
 
     private void expandArray(boolean expand){
@@ -135,16 +133,17 @@ public class AccountManager {
     }
 
     //todo индивидуала надо возвращать, а не индекс
-    public Individual returnIndividual(String accountNumber){
+    //Ненужный метод
+    /*public Individual returnIndividual(String accountNumber){
         for (int i = 0; i < size; i++){
             if (accountNumber.equals(accounts[i].getNumber(accounts[i]))) return i;
         }
         return -1;
-    }
-
-    /*public void showDetailsAccounts(){
-        for (int i = 0; i < size; i++){
-            System.out.println("Index: " + i + " | Number: " + individuals[i].number + " | Balance: " + individuals[i].balance);
-        }
     }*/
+
+    public void showDetailsIndividuals(){
+        for (int i = 0; i < size; i++){
+            System.out.println("Individual " + i + " | Count accounts " + individuals[i].size() );
+        }
+    }
 }

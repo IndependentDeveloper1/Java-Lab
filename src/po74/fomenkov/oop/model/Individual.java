@@ -39,11 +39,11 @@ public class Individual {
     }
 
     public Account get(String accountNumber){
-        return accounts[returnIndexByNumber(accountNumber)];
+        return accounts[getIndex(accountNumber)];
     }
 
     public boolean hasAccount(String accountNumber){
-        if (returnIndexByNumber(accountNumber)!=(-1)) return true;
+        if (getIndex(accountNumber)!=(-1)) return true;
         return false;
     }
 
@@ -62,7 +62,8 @@ public class Individual {
     }
 
     public Account remove(String numberAccount) {
-        return remove(returnIndexByNumber(numberAccount));
+        if (hasAccount(numberAccount))return remove(getIndex(numberAccount));
+        return null;
     }
 
     public int size(){
@@ -105,7 +106,7 @@ public class Individual {
     }
 
     //todo имя - гавно //Вроде исправил
-    public int returnIndexByNumber(String accountNumber){
+    public int getIndex(String accountNumber){
         for (int i = 0; i < size; i++){
             if (accountNumber.equals(accounts[i].getNumber(accounts[i]))) return i;
         }
@@ -123,8 +124,7 @@ public class Individual {
     //todo Имя - гавно // вроде исправил
     private boolean isArrayFull(){
         //TODO пойми, что не так =)))))
-        if (size == accounts.length) return true;
-        return false;
+        return (size == accounts.length);
     }
 
     private void expandArray(boolean expand){

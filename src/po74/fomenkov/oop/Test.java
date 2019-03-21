@@ -44,34 +44,40 @@ public class Test {
 
 
 
-        Individual individual = new Individual();
+        Individual individualOne = new Individual();
+        Individual individualTwo = new Individual();
 
-        individual.add(account0);
-        individual.add(account1);
-        individual.add(account2);
-        individual.add(account5);
-        individual.add(2,account4);
-        individual.add(account5);
+        individualOne.add(account0);
+        individualOne.add(account1);
+        individualOne.add(account2);
+        individualTwo.add(account3);
+        individualTwo.add(account5);
+        individualTwo.add(2,account4);
 
-        individual.showDetailsAccounts();
+        //individualOne.showDetailsAccounts();
 
-        individual.remove(0);
-        individual.remove("54");
+        individualOne.remove(0);
+        individualOne.remove("54");
 
-        individual.showDetailsAccounts();
+        //individualOne.showDetailsAccounts();
 
-        System.out.println(individual.hasAccount("53"));
+        //System.out.println(individualOne.hasAccount("53"));
 
-        individual.showDetailsAccounts();
+        //individualOne.showDetailsAccounts();
 
 
-        System.out.println(individual.totalBalance());
+        //System.out.println(individualOne.totalBalance());
+
 
 
         // Test #3 (class AccountManager)
-        //Not working yet
+        //Working
 
+        AccountManager accountManager = new AccountManager(2);
 
+        accountManager.add(individualOne);
+        accountManager.add(individualTwo);
+        accountManager.showDetailsIndividuals();
 
 
     }
