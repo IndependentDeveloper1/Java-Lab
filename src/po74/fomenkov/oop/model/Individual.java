@@ -20,14 +20,14 @@ public class Individual {
     }
 
     public boolean add(Account account){
-        expandArray(isArrayFull());
+        expandArray(isFull());
         accounts[size] = account;
         size++;
         return true;
     }
 
     public boolean add(int index, Account account){
-        expandArray(isArrayFull());
+        expandArray(isFull());
         shiftOneElement(index, true);
         accounts[index] = account;
         size++;
@@ -39,11 +39,11 @@ public class Individual {
     }
 
     public Account get(String accountNumber){
-        return accounts[getIndex(accountNumber)];
+        return accounts[indexOf(accountNumber)];
     }
 
     public boolean hasAccount(String accountNumber){
-        if (getIndex(accountNumber)!=(-1)) return true;
+        if (indexOf(accountNumber)!=(-1)) return true;
         return false;
     }
 
@@ -62,7 +62,7 @@ public class Individual {
     }
 
     public Account remove(String numberAccount) {
-        if (hasAccount(numberAccount))return remove(getIndex(numberAccount));
+        if (hasAccount(numberAccount))return remove(indexOf(numberAccount));
         return null;
     }
 
@@ -77,19 +77,14 @@ public class Individual {
     }
 
     public Account[] sortedByBalanceAccounts(){
-        //todo getAccounts()
-        //Account[] sortedAccounts = new Account[accounts.length];
-       // System.arraycopy(accounts,0,sortedAccounts,0,size);
         Account[] sortedAccounts = getAccounts();
         Account swapBuf;
         for (int i = 0; i < size-1; i++){
             for (int j = 0; j < size-1;j++) {
-
                 if(sortedAccounts[j].getBalance(accounts[j])>sortedAccounts[j+1].getBalance(accounts[j+1])){
                     swapBuf = sortedAccounts[j+1];
                     sortedAccounts[j+1] = sortedAccounts[j];
                     sortedAccounts[j] = swapBuf;
-                    //swapBuf = null;
                 }
             }
         }
@@ -105,8 +100,7 @@ public class Individual {
         return totalBalance;
     }
 
-    //todo имя - гавно //Вроде исправил
-    public int getIndex(String accountNumber){
+    public int indexOf (String accountNumber) {
         for (int i = 0; i < size; i++){
             if (accountNumber.equals(accounts[i].getNumber(accounts[i]))) return i;
         }
@@ -121,9 +115,7 @@ public class Individual {
 
     }
 
-    //todo Имя - гавно // вроде исправил
-    private boolean isArrayFull(){
-        //TODO пойми, что не так =)))))
+    private boolean isFull(){
         return (size == accounts.length);
     }
 

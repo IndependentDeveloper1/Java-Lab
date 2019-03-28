@@ -16,14 +16,14 @@ public class AccountManager {
     }
 
     public boolean add(Individual individual){
-        expandArray(isFullArray());
+        expandArray(isFull());
         individuals[size] = individual;
         size++;
         return true;
     }
 
     public boolean add(int index, Individual individual){
-        expandArray(isFullArray());
+        expandArray(isFull());
         shiftOneIndividual(index, true);
         individuals[index] = individual;
         size++;
@@ -78,7 +78,6 @@ public class AccountManager {
     }
 
 
-    //todo следующие три метода - в цикле hasAccount а затем соответсвующий метод //сделал
     public Account getAccount(String accountNumber){
         for (int i = 0; i < size; i++){
             if (individuals[i].hasAccount(accountNumber))
@@ -105,7 +104,7 @@ public class AccountManager {
         {
         for (int i = 0; i < size; i++) {
             if (individuals[i].hasAccount(accountNumber)) {
-                return individuals[i].set(individuals[i].getIndex(accountNumber) ,account);
+                return individuals[i].set(individuals[i].indexOf(accountNumber) ,account);
             }
         }
         }
@@ -119,11 +118,8 @@ public class AccountManager {
             System.arraycopy(individuals, index+1, individuals,index,(size-index));
     }
 
-    //todo Имя - гавно
-    private boolean isFullArray(){
-        //TODO пойми, что не так =)))))
-        //исправил
-        return (size == individuals.length);
+    private boolean isFull(){
+        return size == individuals.length;
     }
 
     private void expandArray(boolean expand){
@@ -131,15 +127,6 @@ public class AccountManager {
         System.arraycopy(individuals,0,individualsNew,0,size);
         this.individuals = individualsNew;
     }
-
-    //todo индивидуала надо возвращать, а не индекс
-    //Ненужный метод
-    /*public Individual returnIndividual(String accountNumber){
-        for (int i = 0; i < size; i++){
-            if (accountNumber.equals(accounts[i].getNumber(accounts[i]))) return i;
-        }
-        return -1;
-    }*/
 
     public void showDetailsIndividuals(){
         for (int i = 0; i < size; i++){
