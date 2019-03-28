@@ -79,6 +79,6 @@ public class Test {
         accountManager.add(individualTwo);
         accountManager.showDetailsIndividuals();
 
-//
+
     }
 }
