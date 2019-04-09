@@ -1,22 +1,26 @@
 package po74.fomenkov.oop.model;
 
-public class Individual {
+public class Individual implements Client {
     private int size;
     private Account[] accounts;
+    private String name;
+    private final static String EMPTY_NAME = "";
     private final static int CAPACITY_DEFAULT = 16;
 
     public Individual(){
-        this(CAPACITY_DEFAULT);
+        this(CAPACITY_DEFAULT, EMPTY_NAME);
     }
 
-    public Individual(int capacity) {
+    public Individual(int capacity, String name) {
         this.accounts = new Account[capacity];
+        this.name = name;
     }
 
-    public Individual(Account[] accountsOld){
+    public Individual(Account[] accountsOld, String name){
         Account[] accountsNew = new Account[accountsOld.length];
         System.arraycopy(accountsOld, 0, accountsNew, 0,accountsOld.length);
         this.accounts = accountsNew;
+        this.name = name;
     }
 
     public boolean add(Account account){
@@ -32,6 +36,14 @@ public class Individual {
         accounts[index] = account;
         size++;
         return true;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     public Account get(int index) {
@@ -81,7 +93,7 @@ public class Individual {
         Account swapBuf;
         for (int i = 0; i < size-1; i++){
             for (int j = 0; j < size-1;j++) {
-                if(sortedAccounts[j].getBalance(accounts[j])>sortedAccounts[j+1].getBalance(accounts[j+1])){
+                if(sortedAccounts[j].getBalance()>sortedAccounts[j+1].getBalance()){
                     swapBuf = sortedAccounts[j+1];
                     sortedAccounts[j+1] = sortedAccounts[j];
                     sortedAccounts[j] = swapBuf;
@@ -94,7 +106,7 @@ public class Individual {
     public double totalBalance(){
         double totalBalance = 0;
         for (int i = 0; i < size; i++){
-            totalBalance += accounts[i].getBalance(accounts[i]);
+            totalBalance += accounts[i].getBalance();
 
         }
         return totalBalance;
@@ -102,7 +114,7 @@ public class Individual {
 
     public int indexOf (String accountNumber) {
         for (int i = 0; i < size; i++){
-            if (accountNumber.equals(accounts[i].getNumber(accounts[i]))) return i;
+            if (accountNumber.equals(accounts[i].getNumber())) return i;
         }
         return -1;
     }
@@ -125,11 +137,11 @@ public class Individual {
         this.accounts = accountsNew;
     }
 
-    public void showDetailsAccounts(){
+    /*public void showDetailsAccounts(){
         for (int i = 0; i < size; i++){
-            System.out.println("Index: " + i + " | Number: " + accounts[i].getNumber(accounts[i]) + " | Balance: " + accounts[i].getBalance(accounts[i]));
+            System.out.println("Index: " + i + " | Number: " + accounts[i].getNumber() + " | Balance: " + accounts[i].getBalance());
         }
     }
-
+*/
 
 }
