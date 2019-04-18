@@ -21,30 +21,61 @@ public class Entity implements Client{
 
     public Entity(String name, Account[] accounts){
         this.name = name;
-        ArrayList<Account> clients = new ArrayList<Account>();
         for (int i = 0; i < accounts.length; i++){
-            clients.add(accounts[i]);
+            Node node = new Node();
+            node.value = accounts[i];
+            if (head == null){
+                head = node;
+                tail = node;
+            }
+            else{
+                tail.next = node;
+                tail = node;
+            }
+            size++;
         }
 
     }
 
-    private void add(){
-
+    private void add(Node node){
+        if (head == null){
+            head = node;
+            tail = node;
+        }
+        else{
+            tail.next = node;
+            tail = node;
+        }
+        size++;
     }
 
-    private void add(int position){
-
+    private void add(int index){
+        if(index >= 0 | index <= size - 1){
+            Node node = getNode(index-1);
+            Node newNode = new Node();
+            newNode.next = node.next;
+            node.next = newNode;
+            tail.next = head.next;
+        }
     }
 
-    private Node add(int number){
-
+    private Node getNode(int index){
+        Node node = new Node();
+        for (int i = 0; i < index; i++){
+            node = node.next;
+        }
+        return node;
     }
 
-    private void remove(int number){
-
+    private void removeNode(int index){
+        Node node = getNode(index - 1);
+        node.next = node.next.next;
     }
 
-    private void set(int number){
-
+    private void set(Node newNode, int index){
+        Node node = getNode(index - 1);
+        node = newNode;
     }
+
+
 }
