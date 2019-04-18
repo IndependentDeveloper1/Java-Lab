@@ -1,6 +1,6 @@
 package po74.fomenkov.oop.model;
 
-public class Node {
+class Node {
     Node next;
     Account value;
 }

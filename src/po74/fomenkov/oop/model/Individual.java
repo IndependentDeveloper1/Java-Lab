@@ -16,10 +16,9 @@ public class Individual implements Client {
         this.name = name;
     }
 
-    public Individual(Account[] accountsOld, String name){
-        Account[] accountsNew = new Account[accountsOld.length];
-        System.arraycopy(accountsOld, 0, accountsNew, 0,accountsOld.length);
-        this.accounts = accountsNew;
+    public Individual(Account[] accounts, String name){
+        this.accounts = new Account[accounts.length];
+        System.arraycopy(accounts, 0, this.accounts, 0,accounts.length);
         this.name = name;
     }
 

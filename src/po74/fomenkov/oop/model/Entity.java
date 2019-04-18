@@ -8,13 +8,9 @@ public class Entity implements Client{
     private Node head;
     private Node tail;
 
-    private final static Node EMPTY_HEAD = null;
-    private final static Node EMPTY_TAIL = null;
-
     public Entity(String name){
        this.name = name;
-       this.head = EMPTY_HEAD;
-       this.tail = EMPTY_TAIL;
+       this.head = new Node();
     }
 
 
@@ -38,18 +34,25 @@ public class Entity implements Client{
     }
 
     private void add(Node node){
-        if (head == null){
+        if (head.next == null){
             head = node;
             tail = node;
+            node.next = node;
         }
         else{
             tail.next = node;
             tail = node;
+            tail.next = head.next;
         }
         size++;
     }
 
-    private void add(int index){
+    private void add(int index, Node node){
+        /*todo проверяй 3 граничных условия
+        1) список пустой
+        2) index = 0
+        3) index = size
+        */
         if(index >= 0 | index <= size - 1){
             Node node = getNode(index-1);
             Node newNode = new Node();
@@ -68,6 +71,10 @@ public class Entity implements Client{
     }
 
     private void removeNode(int index){
+        /*todo проверяй 2 граничных условия
+        1) index = 0
+        2) index = size
+        */
         Node node = getNode(index - 1);
         node.next = node.next.next;
     }
