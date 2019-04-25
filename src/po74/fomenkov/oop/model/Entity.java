@@ -19,15 +19,7 @@ public class Entity implements Client{
         for (int i = 0; i < accounts.length; i++){
             Node node = new Node();
             node.value = accounts[i];
-            if (head == null){
-                head = node;
-                tail = node;
-            }
-            else{
-                tail.next = node;
-                tail = node;
-            }
-            size++;
+            add(node);
         }
 
     }
@@ -47,11 +39,7 @@ public class Entity implements Client{
     }
 
     private void add(int index, Node node){
-        /*todo проверяй 3 граничных условия
-        1) список пустой
-        2) index = 0
-        3) index = size
-        */
+
         if (head.next == null){
             head = node;
             tail = node;
@@ -62,11 +50,10 @@ public class Entity implements Client{
             head.next = node;
             tail.next = head.next;
         }
-        else if(index >= 0 | index <= size - 1){
+        else if(index > 0 | index <= size - 1){
             Node nodePrev = getNode(index-1);
+            //todo вставка элемента то?
 
-
-            tail.next = head.next;
         }
         else if (index == size){
             tail.next = node;
@@ -77,7 +64,7 @@ public class Entity implements Client{
     }
 
     private Node getNode(int index){
-        Node node = head;
+        Node node = head.next;
         for (int i = 0; i < index; i++){
             node = node.next;
         }
@@ -85,20 +72,24 @@ public class Entity implements Client{
     }
 
     private void removeNode(int index){
-        /*todo проверяй 2 граничных условия
-        1) index = 0
-        2) index = size
-        */
+
+        Node removedNode;
         if (index == 0){
+            removedNode = head.next;
             head.next = head.next.next;
             tail.next = head.next;
         }
-        else if (index == size){ }
-        else{
-
+        else if (index == size - 1){
+            removedNode = tail;
+            //todo удаление tail
         }
-        Node node = getNode(index - 1);
-        node.next = node.next.next;
+        else{
+            Node node = getNode(index - 1);
+            removedNode = node.next;
+            node.next = node.next.next;
+        }
+        removedNode.next = null;
+        removedNode.value = null;
         size--;
     }
 
