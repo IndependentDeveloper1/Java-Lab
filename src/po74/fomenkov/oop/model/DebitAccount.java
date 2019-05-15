@@ -16,14 +16,14 @@ public class DebitAccount implements Account {
 
     public String getNumber(){return number; }
 
-    public void setNumber(DebitAccount account, String newNumber){
-        account.number = newNumber;
+    public void setNumber(String newNumber){
+        number = newNumber;
     }
 
     public double getBalance(){ return balance; }
 
-    public void setBalance(DebitAccount account, double newBalance){
-        account.balance = newBalance;
+    public void setBalance(double newBalance){
+        balance = newBalance;
     }
 
 }

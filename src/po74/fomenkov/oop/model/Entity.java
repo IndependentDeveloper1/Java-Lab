@@ -12,8 +12,6 @@ public class Entity implements Client{
        this.head = new Node();
     }
 
-
-
     public Entity(String name, Account[] accounts){
         this.name = name;
         for (int i = 0; i < accounts.length; i++){
@@ -22,6 +20,13 @@ public class Entity implements Client{
             add(node);
         }
 
+    }
+
+    private Node setNode(int index, String accountNumber){
+        Node node = getNode(index);
+        Node oldNode = node;
+        node.value.setNumber(accountNumber);
+        return oldNode;
     }
 
     private void add(Node node){
@@ -52,6 +57,9 @@ public class Entity implements Client{
         }
         else if(index > 0 | index <= size - 1){
             Node nodePrev = getNode(index-1);
+            Node newNode = new Node();
+            newNode.next = nodePrev.next;
+            nodePrev.next = newNode;
             //todo вставка элемента то?
 
         }
@@ -71,7 +79,17 @@ public class Entity implements Client{
         return node;
     }
 
-    private void removeNode(int index){
+    private Node getNode(String accountNumber){
+        Node node = head.next;
+        for (int i = 0; i < size - 1; i++){
+            node = node.next;
+            if (node.value.getNumber().equals(accountNumber)) return node;
+        }
+        node = null;
+        return node;
+    }
+
+    private Node removeNode(int index){
 
         Node removedNode;
         if (index == 0){
@@ -81,6 +99,9 @@ public class Entity implements Client{
         }
         else if (index == size - 1){
             removedNode = tail;
+            Node nodePrev = getNode(index - 1);
+            nodePrev.next = tail.next;
+            tail = nodePrev;
             //todo удаление tail
         }
         else{
@@ -88,84 +109,127 @@ public class Entity implements Client{
             removedNode = node.next;
             node.next = node.next.next;
         }
-        removedNode.next = null;
-        removedNode.value = null;
         size--;
+        return removedNode;
+    }
+
+    private Node removeNode(String accountNumber){
+        return removeNode(getIndex(accountNumber));
+    }
+
+    private int getIndex(String accountNumber){
+        if (nodeHasAccount(accountNumber)){
+            Node node = head.next;
+            for (int i = 0; i < size - 1; i++){
+                node = node.next;
+                if (node.value.getNumber().equals(accountNumber)) return i;
+            }
+        }
+        return -1;
+    }
+
+    private boolean nodeHasAccount(String accountNumber){
+        return getNode(accountNumber) != null;
     }
 
 
     @Override
     public boolean add(Account account) {
-        return false;
+        Node node = new Node();
+        node.value = account;
+        add(node);
+        return true;
     }
 
     @Override
     public boolean add(int index, Account account) {
-        return false;
+        Node node = new Node();
+        node.value = account;
+        add(index, node);
+        return true;
     }
 
     @Override
     public Account get(int index) {
-        return null;
+        return getNode(index).value;
     }
 
     @Override
     public Account get(String accountNumber) {
-        return null;
+        return getNode(accountNumber).value;
     }
 
     @Override
     public boolean hasAccount(String accountNumber) {
-        return false;
+        return nodeHasAccount(accountNumber);
     }
 
     @Override
     public Account set(int index, Account account) {
-        return null;
+        return setNode(index, account.getNumber()).value;
     }
 
     @Override
     public Account remove(int index) {
-        return null;
+        return removeNode(index).value;
     }
 
     @Override
     public Account remove(String accountNumber) {
-        return null;
+        return removeNode(accountNumber).value;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public Account[] getAccounts() {
-        return new Account[0];
+        Account[] accounts = new Account[size];
+        for (int i = 0; i < size - 1; i++){
+            accounts[i] = getNode(i).value;
+        }
+        return accounts;
     }
 
     @Override
     public Account[] sortedByBalanceAccounts() {
-        return new Account[0];
+        Account[] sortedAccounts = getAccounts();
+        Account swapBuf;
+        for (int i = 0; i < size-1; i++){
+            for (int j = 0; j < size-1;j++) {
+                if(sortedAccounts[j].getBalance()>sortedAccounts[j+1].getBalance()){
+                    swapBuf = sortedAccounts[j+1];
+                    sortedAccounts[j+1] = sortedAccounts[j];
+                    sortedAccounts[j] = swapBuf;
+                }
+            }
+        }
+        return sortedAccounts;
     }
 
     @Override
     public double totalBalance() {
-        return 0;
+        double totalBalance = 0;
+        for (int i = 0; i < size - 1; i++){
+            totalBalance += getNode(i).value.getBalance();
+        }
+        return totalBalance;
     }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public void setName(String name) {
-
+        this.name = name;
     }
 
     @Override
     public int indexOf(String accountNumber) {
-        return 0;
+        return indexOf(accountNumber);
     }
 }
