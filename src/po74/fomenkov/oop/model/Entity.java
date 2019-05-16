@@ -22,10 +22,10 @@ public class Entity implements Client{
 
     }
 
-    private Node setNode(int index, String accountNumber){
+    private Node setNode(int index, Account account){
         Node node = getNode(index);
         Node oldNode = node;
-        node.value.setNumber(accountNumber);
+        node.value = account;
         return oldNode;
     }
 
@@ -60,8 +60,6 @@ public class Entity implements Client{
             Node newNode = new Node();
             newNode.next = nodePrev.next;
             nodePrev.next = newNode;
-            //todo вставка элемента то?
-
         }
         else if (index == size){
             tail.next = node;
@@ -102,7 +100,6 @@ public class Entity implements Client{
             Node nodePrev = getNode(index - 1);
             nodePrev.next = tail.next;
             tail = nodePrev;
-            //todo удаление tail
         }
         else{
             Node node = getNode(index - 1);
@@ -122,14 +119,15 @@ public class Entity implements Client{
             Node node = head.next;
             for (int i = 0; i < size - 1; i++){
                 node = node.next;
-                if (node.value.getNumber().equals(accountNumber)) return i;
+                if (node.value.getNumber().equals(accountNumber))
+                    return i;
             }
         }
         return -1;
     }
 
     private boolean nodeHasAccount(String accountNumber){
-        return getNode(accountNumber) != null;
+        return getIndex(accountNumber) != -1;
     }
 
 
@@ -166,7 +164,7 @@ public class Entity implements Client{
 
     @Override
     public Account set(int index, Account account) {
-        return setNode(index, account.getNumber()).value;
+        return setNode(index, account).value;
     }
 
     @Override
@@ -230,7 +228,7 @@ public class Entity implements Client{
 
     @Override
     public int indexOf(String accountNumber) {
-        return indexOf(accountNumber);
+        return getIndex(accountNumber);
     }
 
     @Override

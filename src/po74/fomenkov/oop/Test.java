@@ -17,7 +17,7 @@ public class Test {
         Account account = new DebitAccount();
 
 
-
+        //todo ТЕСТЫ ДОПИШИ!!!!!
 
         account1.setNumber("a");
         account1.setBalance(12.5);
@@ -61,11 +61,6 @@ public class Test {
 
 
         accountManager.get(0).showDetails();
-        accountManager.
-
-
-
-
 
         }
     }
