@@ -181,7 +181,7 @@ public class Entity implements Client{
 
     @Override
     public int size() {
-        return size;
+        return this.size;
     }
 
     @Override
@@ -232,4 +232,14 @@ public class Entity implements Client{
     public int indexOf(String accountNumber) {
         return indexOf(accountNumber);
     }
+
+    @Override
+    public void showDetails(){
+        Account[] accounts = getAccounts();
+        for (int i = 0; i < size - 1; i++){
+            System.out.println("Balance is: " + accounts[i].getBalance() + " Account number is: " + accounts[i].getNumber());
+        }
+        System.out.println(size);
+    }
+
 }

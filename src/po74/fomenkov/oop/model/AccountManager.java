@@ -130,7 +130,9 @@ public class AccountManager {
 
     public void showDetailsClients(){
         for (int i = 0; i < size; i++){
-            System.out.println("Individual " + i + " | Count accounts " + clients[i].size() );
+            System.out.println("Client " + i + " | Count accounts " + clients[i].size() );
+            System.out.println(clients[i].size());
+
         }
     }
 }

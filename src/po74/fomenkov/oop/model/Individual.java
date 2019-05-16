@@ -78,7 +78,7 @@ public class Individual implements Client {
     }
 
     public int size(){
-        return size;
+        return this.size;
     }
 
     public Account[] getAccounts(){
@@ -136,11 +136,11 @@ public class Individual implements Client {
         this.accounts = accountsNew;
     }
 
-    /*public void showDetailsAccounts(){
+    public void showDetails(){
         for (int i = 0; i < size; i++){
             System.out.println("Index: " + i + " | Number: " + accounts[i].getNumber() + " | Balance: " + accounts[i].getBalance());
         }
     }
-*/
+
 
 }
