@@ -2,6 +2,8 @@ package po74.fomenkov.oop;
 
 import po74.fomenkov.oop.model.*;
 
+import java.lang.ref.Cleaner;
+
 
 public class Test {
     public static void main(String[] args) {
@@ -14,9 +16,6 @@ public class Test {
         Account account2 = new DebitAccount() ;
         Account account3 = new DebitAccount() ;
 
-        Account account = new DebitAccount();
-
-
         //todo ТЕСТЫ ДОПИШИ!!!!!
 
         account1.setNumber("a");
@@ -26,19 +25,13 @@ public class Test {
         account3.setNumber("c");
         account3.setBalance(8.1);
 
-        System.out.println(account1.getNumber());
-
         Client client1 = new Entity("1") ;
         Client client2 = new Entity("2") ;
         Client client3 = new Entity("3") ;
 
-
-        AccountManager accountManager = new AccountManager(1);
-
         client1.add(account1);
         client1.add(account2);
         client1.add(account3);
-       // System.out.println(client1.size());
 
         client2.add(account2);
         client2.add(account1);
@@ -48,20 +41,83 @@ public class Test {
         client3.add(account2);
         client3.add(account1);
 
+        AccountManager accountManager = new AccountManager(1);
+
         accountManager.add(client1);
         accountManager.add(client3);
         accountManager.add(client2);
 
 
-        Client[] clients = accountManager.getClients();
-        //System.out.println(clients[0].totalBalance());
+       // client1.remove(0);
 
+        System.out.println();
+        client1.showDetails();
 
-        //accountManager.showDetailsClients();
+        client1.set(2,account1);
 
+        System.out.println();
+        client1.showDetails();
 
-        accountManager.get(0).showDetails();
+        client1.add(account3);
 
+        System.out.println();
+        client1.showDetails();
+
+        client1.add(0,account3);
+
+        System.out.println();
+        client1.showDetails();
+
+        client1.remove(0);
+
+        System.out.println();
+        client1.showDetails();
+
+        client1.remove("a");
+
+        System.out.println();
+        client1.showDetails();
+
+        System.out.println(client1.hasAccount("a"));
+        System.out.println(client1.hasAccount("d"));
+
+        client1.add(account2);
+        client1.add(account3);
+        Account[] accounts = client1.sortedByBalanceAccounts();
+
+        for (int i = 0; i < accounts.length; i++){
+            System.out.println(accounts[i].getBalance());
         }
+
+        System.out.println(client1.getName());
+
+        System.out.println("Total balance: " + client1.totalBalance());
+
+        System.out.println();
+
+        accountManager.showDetailsClients();
+        accountManager.remove(1);
+        accountManager.showDetailsClients();
+        Account account = accountManager.getAccount("a");
+        System.out.println(account.getBalance());
+        System.out.println("Count clients: " + accountManager.size());
+        Client[] clients = accountManager.sortedByBalanceClients();
+
+        for (int i = 0; i < clients.length; i++){
+            System.out.println(clients[i].totalBalance());
+        }
+
+        accountManager.set(1,client1);
+        accountManager.showDetailsClients();
+
+        Account account123 = accountManager.setAccount("c", account2);
+        System.out.println(account123.getBalance());
+
+        Client[] clients2 = accountManager.getClients();
+        for (int i = 0; i < clients2.length; i++){
+            System.out.println(clients2[i].totalBalance());
+        }
+
+    }
     }
 

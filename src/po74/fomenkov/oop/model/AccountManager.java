@@ -70,7 +70,6 @@ public class AccountManager {
                     swapBuff = sortedClients[j+1];
                     sortedClients[j+1] = sortedClients[j];
                     sortedClients[j] = swapBuff;
-                    //swapBuff = null;
                 }
             }
         }
@@ -130,9 +129,7 @@ public class AccountManager {
 
     public void showDetailsClients(){
         for (int i = 0; i < size; i++){
-            System.out.println("Client " + i + " | Count accounts " + clients[i].size() );
-            System.out.println(clients[i].size());
-
+            System.out.println("Client " + (i + 1) + " | Count accounts " + clients[i].size() );
         }
     }
 }

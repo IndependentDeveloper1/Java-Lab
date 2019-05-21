@@ -1,6 +1,8 @@
 package po74.fomenkov.oop.model;
 
 
+import java.net.SocketOption;
+
 public class Entity implements Client{
     private String name;
     private int size;
@@ -31,14 +33,14 @@ public class Entity implements Client{
 
     private void add(Node node){
         if (head.next == null){
-            head = node;
+            head.next = node;
             tail = node;
-            node.next = node;
+            tail.next = node;
         }
-        else{
+        else {
             tail.next = node;
             tail = node;
-            tail.next = head.next;
+            node.next = head.next;
         }
         size++;
     }
@@ -46,20 +48,20 @@ public class Entity implements Client{
     private void add(int index, Node node){
 
         if (head.next == null){
-            head = node;
+            head.next = node;
             tail = node;
             node.next = node;
         }
         else if (index == 0){
-            node.next = head.next.next;
+            node.next = head.next;
             head.next = node;
-            tail.next = head.next;
+            tail.next = node;
         }
         else if(index > 0 | index <= size - 1){
             Node nodePrev = getNode(index-1);
-            Node newNode = new Node();
-            newNode.next = nodePrev.next;
-            nodePrev.next = newNode;
+
+            node.next = nodePrev.next;
+            nodePrev.next = node;
         }
         else if (index == size){
             tail.next = node;
@@ -79,9 +81,9 @@ public class Entity implements Client{
 
     private Node getNode(String accountNumber){
         Node node = head.next;
-        for (int i = 0; i < size - 1; i++){
-            node = node.next;
+        for (int i = 0; i < size; i++){
             if (node.value.getNumber().equals(accountNumber)) return node;
+            node = node.next;
         }
         node = null;
         return node;
@@ -115,14 +117,12 @@ public class Entity implements Client{
     }
 
     private int getIndex(String accountNumber){
-        if (nodeHasAccount(accountNumber)){
             Node node = head.next;
-            for (int i = 0; i < size - 1; i++){
-                node = node.next;
+            for (int i = 0; i < size; i++){
                 if (node.value.getNumber().equals(accountNumber))
                     return i;
+                node = node.next;
             }
-        }
         return -1;
     }
 
@@ -185,7 +185,7 @@ public class Entity implements Client{
     @Override
     public Account[] getAccounts() {
         Account[] accounts = new Account[size];
-        for (int i = 0; i < size - 1; i++){
+        for (int i = 0; i < size; i++){
             accounts[i] = getNode(i).value;
         }
         return accounts;
@@ -195,8 +195,8 @@ public class Entity implements Client{
     public Account[] sortedByBalanceAccounts() {
         Account[] sortedAccounts = getAccounts();
         Account swapBuf;
-        for (int i = 0; i < size-1; i++){
-            for (int j = 0; j < size-1;j++) {
+        for (int i = 0; i < size - 1; i++){
+            for (int j = 0; j < size - 1;j++) {
                 if(sortedAccounts[j].getBalance()>sortedAccounts[j+1].getBalance()){
                     swapBuf = sortedAccounts[j+1];
                     sortedAccounts[j+1] = sortedAccounts[j];
@@ -210,7 +210,7 @@ public class Entity implements Client{
     @Override
     public double totalBalance() {
         double totalBalance = 0;
-        for (int i = 0; i < size - 1; i++){
+        for (int i = 0; i < size; i++){
             totalBalance += getNode(i).value.getBalance();
         }
         return totalBalance;
@@ -234,10 +234,9 @@ public class Entity implements Client{
     @Override
     public void showDetails(){
         Account[] accounts = getAccounts();
-        for (int i = 0; i < size - 1; i++){
-            System.out.println("Balance is: " + accounts[i].getBalance() + " Account number is: " + accounts[i].getNumber());
+        for (int i = 0; i < size; i++){
+            System.out.println("Account: " + i + " Balance is: " + accounts[i].getBalance() + " Account number is: " + accounts[i].getNumber());
         }
-        System.out.println(size);
     }
 
 }
