@@ -16,7 +16,6 @@ public class Test {
         Account account2 = new DebitAccount() ;
         Account account3 = new DebitAccount() ;
 
-        //todo ТЕСТЫ ДОПИШИ!!!!!
 
         account1.setNumber("a");
         account1.setBalance(12.5);

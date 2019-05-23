@@ -19,6 +19,11 @@ public interface Client {
     void showDetails();
     int getCreditScores();
     void addCreditScores(int creditScores);
-    ClientStatus getStatus();
+    default ClientStatus getStatus() {
+        if (getCreditScores() < ClientStatus.BAD.getCreditScoreBound())
+            return ClientStatus.BAD;
+        else if ()
+            //todo и так далее по диапазонам
+    }
     Credit[] getCreditAccounts();
 }

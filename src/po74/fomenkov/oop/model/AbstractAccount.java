@@ -3,8 +3,8 @@ package po74.fomenkov.oop.model;
 public abstract class AbstractAccount implements Account{
     private String number;
     private double balance;
-    private final static String NUMBER_DEFAULT = "";
-    private final static double BALANCE_DEFAULT = 0.0;
+    protected final static String NUMBER_DEFAULT = "";
+    protected final static double BALANCE_DEFAULT = 0.0;
 
     protected AbstractAccount(){
         this(NUMBER_DEFAULT, BALANCE_DEFAULT);

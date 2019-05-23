@@ -244,20 +244,11 @@ public class Entity implements Client{
     }
 
     @Override
-    public ClientStatus getStatus() {
-        switch (creditScores){
-            case 0|1|2:
-                return ClientStatus.GOOD;
-            case 3|4:
-                return ClientStatus.GOLD;
-        }
-
-
-        return (ClientStatus.BAD);
-    }
-
-    @Override
     public Credit[] getCreditAccounts() {
+        Node currentNode = head;
+        //todo циклом по нодам
+        if (currentNode.value instanceof Credit)
+            (Credit) currentNode.value
         //Credit[] credits = new CreditAccount()[getAccounts().length];
         return null;
     }

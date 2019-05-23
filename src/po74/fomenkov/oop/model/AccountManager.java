@@ -134,7 +134,7 @@ public class AccountManager {
     }
 
     public Client[] getDebtors(){
-
+        //todo те клиенты, у которых есть кредит (хоть один)
     }
 
     public Client[] getWickedDebtors(){
