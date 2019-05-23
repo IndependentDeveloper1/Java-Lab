@@ -8,10 +8,13 @@ public class Entity implements Client{
     private int size;
     private Node head;
     private Node tail;
+    private int creditScores;
+    private final static int CREDIT_SCORES_DEFAULT = 0;
 
     public Entity(String name){
        this.name = name;
        this.head = new Node();
+       creditScores = CREDIT_SCORES_DEFAULT;
     }
 
     public Entity(String name, Account[] accounts){
@@ -20,6 +23,7 @@ public class Entity implements Client{
             Node node = new Node();
             node.value = accounts[i];
             add(node);
+            creditScores = CREDIT_SCORES_DEFAULT;
         }
 
     }
@@ -239,4 +243,31 @@ public class Entity implements Client{
         }
     }
 
+    @Override
+    public ClientStatus getStatus() {
+        switch (creditScores){
+            case 0|1|2:
+                return ClientStatus.GOOD;
+            case 3|4:
+                return ClientStatus.GOLD;
+        }
+
+        return (ClientStatus.BAD);
+    }
+
+    @Override
+    public Credit[] getCreditAccounts() {
+        //Credit[] credits = new CreditAccount()[getAccounts().length];
+        return null;
+    }
+
+    @Override
+    public int getCreditScores() {
+        return creditScores;
+    }
+
+    @Override
+    public void addCreditScores(int creditScores) {
+        this.creditScores += creditScores;
+    }
 }

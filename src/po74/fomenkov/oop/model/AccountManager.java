@@ -132,4 +132,13 @@ public class AccountManager {
             System.out.println("Client " + (i + 1) + " | Count accounts " + clients[i].size() );
         }
     }
+
+    public Client[] getDebtors(){
+
+    }
+
+    public Client[] getWickedDebtors(){
+        Client[] wickedDebtors = ;
+
+    }
 }

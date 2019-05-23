@@ -17,4 +17,8 @@ public interface Client {
     void setName(String name);
     int indexOf(String accountNumber);
     void showDetails();
+    int getCreditScores();
+    void addCreditScores(int creditScores);
+    ClientStatus getStatus();
+    Credit[] getCreditAccounts();
 }

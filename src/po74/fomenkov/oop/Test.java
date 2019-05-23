@@ -7,7 +7,7 @@ import java.lang.ref.Cleaner;
 
 public class Test {
     public static void main(String[] args) {
-        lab2test();
+        lab3test();
     }
 
 
@@ -119,5 +119,20 @@ public class Test {
         }
 
     }
+
+    public static void lab3test(){
+        //2
+        Account abstractAccount = new DebitAccount("123",321);
+        System.out.println(abstractAccount.getBalance());
+        System.out.println(abstractAccount.getNumber());
+        //3
+        Credit credit = new CreditAccount("1", 12.2, 12);
+        System.out.println(credit.getAPR());
+        System.out.println(((AbstractAccount) credit).getBalance());
+        //4
+        System.out.println(ClientStatus.BAD);
+
     }
+
+}
 
