@@ -252,6 +252,7 @@ public class Entity implements Client{
                 return ClientStatus.GOLD;
         }
 
+
         return (ClientStatus.BAD);
     }
 
