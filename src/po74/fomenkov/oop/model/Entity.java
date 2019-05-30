@@ -19,6 +19,7 @@ public class Entity implements Client{
 
     public Entity(String name, Account[] accounts){
         this.name = name;
+        this.head = new Node();
         for (int i = 0; i < accounts.length; i++){
             Node node = new Node();
             node.value = accounts[i];
