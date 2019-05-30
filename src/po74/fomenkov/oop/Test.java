@@ -128,8 +128,35 @@ public class Test {
         Credit credit = new CreditAccount("1", 12.2, 12);
         System.out.println(credit.getAPR());
         System.out.println(((AbstractAccount) credit).getBalance());
-        //4
-        System.out.println(ClientStatus.BAD);
+        //5
+        Account abstractAccount1 = new DebitAccount("123",321);
+        Account abstractAccount2 = new DebitAccount("789",987);
+        Account abstractAccount3 = new DebitAccount("456",654);
+        Account[] accounts = new Account[3];
+        accounts[0] = abstractAccount1;
+        accounts[1] = abstractAccount2;
+        accounts[2] = abstractAccount3;
+        Client clientEntity1 = new Entity("Ivan");
+        Client clientEntity2 = new Entity("Slava", accounts);
+        Client clientIndividual1 = new Individual();
+        Client clientIndividual2 = new Individual(3,"Vladimir", 0);
+        Client clientIndividual3 = new Individual(accounts, "Peter", -4);
+        System.out.println(clientEntity1.getStatus() + " " + clientEntity1.getCreditScores() + " " + clientEntity1.getName());
+        System.out.println(clientIndividual1.getStatus() + " " + clientIndividual1.getCreditScores() + " " + clientIndividual1.getName());
+        System.out.println(clientIndividual1.getName() + clientIndividual2.getName() + clientIndividual3.getName());
+        clientEntity1.addCreditScores(12);
+        System.out.println(clientEntity1.getStatus());
+        clientEntity1.setName("Adolf");
+        System.out.println(clientEntity1.getName() + " " + clientEntity1.getStatus());
+        clientEntity1.addCreditScores(-9);
+        System.out.println(clientEntity1.getName() + " " + clientEntity1.getStatus());
+        Credit[] credits = clientEntity1.getCreditAccounts();
+        if (credits.length != 0) {
+            credits[0].setAPR(10);
+            for (int i = 0; i < credits.length; i++){
+                System.out.println(credits[i].getNumber() + " " + credits[i].getAPR());
+            }
+        }
 
     }
 

@@ -20,10 +20,19 @@ public interface Client {
     int getCreditScores();
     void addCreditScores(int creditScores);
     default ClientStatus getStatus() {
-        if (getCreditScores() < ClientStatus.BAD.getCreditScoreBound())
+        if (getCreditScores() <= ClientStatus.BAD.getCreditScoreBound())
             return ClientStatus.BAD;
-        else if ()
-            //todo и так далее по диапазонам
+        else if (getCreditScores() >= ClientStatus.RISKY.getCreditScoreBound() & getCreditScores() < ClientStatus.GOOD.getCreditScoreBound()){
+            return ClientStatus.RISKY;
+        }
+        else if (getCreditScores() >= ClientStatus.GOOD.getCreditScoreBound() & getCreditScores() < ClientStatus.GOLD.getCreditScoreBound()){
+            return ClientStatus.GOOD;
+        }
+        else if (getCreditScores() >= ClientStatus.GOLD.getCreditScoreBound() & getCreditScores() < ClientStatus.PLATINUM.getCreditScoreBound()){
+            return ClientStatus.GOLD;
+        }
+        else return ClientStatus.PLATINUM;
+        //todo и так далее по диапазонам
     }
     Credit[] getCreditAccounts();
 }

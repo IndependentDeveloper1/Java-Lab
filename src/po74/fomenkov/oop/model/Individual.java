@@ -6,20 +6,25 @@ public class Individual implements Client {
     private String name;
     private final static String EMPTY_NAME = "";
     private final static int CAPACITY_DEFAULT = 16;
+    private int creditScores;
+    private final static int CREDIT_SCORES_DEFAULT = 0;
+
 
     public Individual(){
-        this(CAPACITY_DEFAULT, EMPTY_NAME);
+        this(CAPACITY_DEFAULT, EMPTY_NAME, CREDIT_SCORES_DEFAULT);
     }
 
-    public Individual(int capacity, String name) {
+    public Individual(int capacity, String name, int creditScores) {
         this.accounts = new Account[capacity];
         this.name = name;
+        this.creditScores = creditScores;
     }
 
-    public Individual(Account[] accounts, String name){
+    public Individual(Account[] accounts, String name, int creditScores){
         this.accounts = new Account[accounts.length];
         System.arraycopy(accounts, 0, this.accounts, 0,accounts.length);
         this.name = name;
+        this.creditScores = creditScores;
     }
 
     public boolean add(Account account){
@@ -140,6 +145,29 @@ public class Individual implements Client {
         for (int i = 0; i < size; i++){
             System.out.println("Index: " + i + " | Number: " + accounts[i].getNumber() + " | Balance: " + accounts[i].getBalance());
         }
+    }
+
+    @Override
+    public int getCreditScores() {
+        return creditScores;
+    }
+
+    @Override
+    public void addCreditScores(int creditScores) {
+        this.creditScores += creditScores;
+    }
+
+    @Override
+    public Credit[] getCreditAccounts() {
+        Credit[] credits = new Credit[size];
+        int countCredits = 0;
+        for (int i = 0; i < size; i++){
+            if (accounts[i] instanceof Credit){
+                credits[countCredits] = (Credit) accounts[i];
+                countCredits++;
+            }
+        }
+        return credits;
     }
 
 

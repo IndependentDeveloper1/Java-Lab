@@ -245,12 +245,19 @@ public class Entity implements Client{
 
     @Override
     public Credit[] getCreditAccounts() {
-        Node currentNode = head;
+        Credit[] credits = new Credit[size];
+        int countCredits = 0;
+        Node currentNode = head.next;
+        for (int i = 0; i < size; i++){
         //todo циклом по нодам
-        if (currentNode.value instanceof Credit)
-            (Credit) currentNode.value
-        //Credit[] credits = new CreditAccount()[getAccounts().length];
-        return null;
+            if (currentNode.value instanceof Credit){
+                credits[countCredits] = (Credit) currentNode.value;
+                currentNode = currentNode.next;
+                countCredits++;
+            }
+        }
+        return credits;
+
     }
 
     @Override

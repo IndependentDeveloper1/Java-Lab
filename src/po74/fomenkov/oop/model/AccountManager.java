@@ -135,10 +135,18 @@ public class AccountManager {
 
     public Client[] getDebtors(){
         //todo те клиенты, у которых есть кредит (хоть один)
+        for (int i = 0; i < size; i++){
+            if (clients[i] instanceof Credit) return clients;
+        }
+        return null;
     }
 
     public Client[] getWickedDebtors(){
-        Client[] wickedDebtors = ;
-
+        if (getDebtors() != null){
+            for (int i = 0; i < size; i++){
+                if (clients[i].getStatus() == ClientStatus.BAD) return clients;
+            }
+        }
+        return null;
     }
 }
