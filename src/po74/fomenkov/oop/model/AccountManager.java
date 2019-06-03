@@ -13,6 +13,7 @@ public class AccountManager {
         Client[] clientsNew = new Client[clientsOld.length];
         System.arraycopy(clientsOld, 0, clientsNew, 0, clientsOld.length);
         this.clients = clientsOld;
+        size = clientsNew.length;
     }
 
     public boolean add(Client client){
@@ -136,7 +137,8 @@ public class AccountManager {
     public Client[] getDebtors(){
         //todo те клиенты, у которых есть кредит (хоть один)
         for (int i = 0; i < size; i++){
-            if (clients[i] instanceof Credit) return clients;
+            if (clients[i].getCreditAccounts() != null)
+                return clients;
         }
         return null;
     }

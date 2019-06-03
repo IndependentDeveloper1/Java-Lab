@@ -25,6 +25,7 @@ public class Individual implements Client {
         System.arraycopy(accounts, 0, this.accounts, 0,accounts.length);
         this.name = name;
         this.creditScores = creditScores;
+        size = accounts.length;
     }
 
     public boolean add(Account account){

@@ -2,6 +2,7 @@ package po74.fomenkov.oop.model;
 
 
 import java.net.SocketOption;
+import java.util.ArrayList;
 
 public class Entity implements Client{
     private String name;
@@ -246,18 +247,22 @@ public class Entity implements Client{
 
     @Override
     public Credit[] getCreditAccounts() {
-        Credit[] credits = new Credit[size];
-        int countCredits = 0;
+        ArrayList<Credit> credits = new ArrayList<>();
         Node currentNode = head.next;
         for (int i = 0; i < size; i++){
         //todo циклом по нодам
             if (currentNode.value instanceof Credit){
-                credits[countCredits] = (Credit) currentNode.value;
-                currentNode = currentNode.next;
-                countCredits++;
+                credits.add( (Credit) currentNode.value);
             }
+            currentNode = currentNode.next;
         }
-        return credits;
+        if (credits.size() != 0){
+            Credit[] creditsOut = new Credit[credits.size()];
+            for (int i = 0; i < credits.size(); i++)
+                creditsOut[i] = credits.get(i);
+            return creditsOut;
+        }
+        return null;
 
     }
 

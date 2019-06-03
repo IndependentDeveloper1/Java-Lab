@@ -121,42 +121,69 @@ public class Test {
 
     public static void lab3test(){
         //2
-        Account abstractAccount = new DebitAccount("123",321);
+        Account abstractAccount = new DebitAccount("Debit account",321);
         System.out.println(abstractAccount.getBalance());
         System.out.println(abstractAccount.getNumber());
         //3
-        Credit credit = new CreditAccount("1", 12.2, 12);
+        Credit credit = new CreditAccount("Credit account", 12.2, 12);
         System.out.println(credit.getAPR());
         System.out.println(((AbstractAccount) credit).getBalance());
         //5
-        Account abstractAccount1 = new DebitAccount("123",321);
-        Account abstractAccount2 = new DebitAccount("789",987);
-        Account abstractAccount3 = new DebitAccount("456",654);
+        Account abstractAccount1 = new DebitAccount("Debit account 1",321);
+        Account abstractAccount2 = new DebitAccount("Debit account 2",987);
+        Account abstractAccount3 = new CreditAccount("Debit account 3",654,20);
         Account[] accounts = new Account[3];
         accounts[0] = abstractAccount1;
         accounts[1] = abstractAccount2;
         accounts[2] = abstractAccount3;
-        Client clientEntity1 = new Entity("Ivan");
-        Client clientEntity2 = new Entity("Slava", accounts);
+        Client clientEntity1 = new Entity("Client entity 1");
+        Client clientEntity2 = new Entity("Client entity 2", accounts);
         Client clientIndividual1 = new Individual();
-        Client clientIndividual2 = new Individual(3,"Vladimir", 0);
-        Client clientIndividual3 = new Individual(accounts, "Peter", -4);
+        Client clientIndividual2 = new Individual(3,"Individual 2", 0);
+        Client clientIndividual3 = new Individual(accounts, "Individual 3", -4);
+
         System.out.println(clientEntity1.getStatus() + " " + clientEntity1.getCreditScores() + " " + clientEntity1.getName());
         System.out.println(clientIndividual1.getStatus() + " " + clientIndividual1.getCreditScores() + " " + clientIndividual1.getName());
         System.out.println(clientIndividual1.getName() + clientIndividual2.getName() + clientIndividual3.getName());
+
+        clientEntity1.add(abstractAccount);
         clientEntity1.addCreditScores(12);
         System.out.println(clientEntity1.getStatus());
-        clientEntity1.setName("Adolf");
+
+        clientEntity1.setName("Client Adolf");
         System.out.println(clientEntity1.getName() + " " + clientEntity1.getStatus());
-        clientEntity1.addCreditScores(-9);
+
+        clientEntity1.addCreditScores(-90);
         System.out.println(clientEntity1.getName() + " " + clientEntity1.getStatus());
+
+        Account clientWithCredit = new CreditAccount();
+        System.out.println(clientWithCredit.getNumber() + " " + ((CreditAccount) clientWithCredit).getAPR());
+        clientEntity1.add(clientWithCredit);
+
         Credit[] credits = clientEntity1.getCreditAccounts();
-        if (credits.length != 0) {
+        if (credits != null) {
             credits[0].setAPR(10);
             for (int i = 0; i < credits.length; i++){
-                System.out.println(credits[i].getNumber() + " " + credits[i].getAPR());
+                System.out.println(credits[i].getNumber() + " 123 " + credits[i].getAPR());
             }
         }
+        Client[] clients = new Client[5];
+        clients[0] = clientEntity1;
+        clients[1] = clientEntity2;
+        clients[2] = clientIndividual1;
+        clients[3] = clientIndividual2;
+        clients[4] = clientIndividual3;
+
+        AccountManager accountManager = new AccountManager(clients);
+        Credit[] creditAccounts1 = clientEntity2.getCreditAccounts();
+        System.out.println(creditAccounts1[0] instanceof Credit);
+        System.out.println(credit instanceof Credit);
+
+        Client[] debtors = accountManager.getDebtors();
+        System.out.println("Name: " + debtors[0].getName() + " Status: " + debtors[0].getStatus());
+        Client[] wickedDebtors = accountManager.getWickedDebtors();
+        System.out.println("Name: " + wickedDebtors[0].getName() + " Status: " + wickedDebtors[0].getStatus());
+
 
     }
 
