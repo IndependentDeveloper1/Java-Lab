@@ -7,7 +7,7 @@ import java.lang.ref.Cleaner;
 
 public class Test {
     public static void main(String[] args) {
-        lab3test();
+        lab4test();
     }
 
 
@@ -201,6 +201,10 @@ public class Test {
         Client[] wickedDebtors = accountManager.getWickedDebtors();
         System.out.println("Name: " + wickedDebtors[0].getName() + " Status: " + wickedDebtors[0].getStatus());
 
+
+    }
+
+    public static void lab4test(){
 
     }
 

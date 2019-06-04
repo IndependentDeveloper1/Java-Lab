@@ -1,5 +1,7 @@
 package po74.fomenkov.oop.model;
 
+import java.util.ArrayList;
+
 public class Individual implements Client {
     private int size;
     private Account[] accounts;
@@ -160,15 +162,20 @@ public class Individual implements Client {
 
     @Override
     public Credit[] getCreditAccounts() {
-        Credit[] credits = new Credit[size];
-        int countCredits = 0;
+        ArrayList<Credit> credits = new ArrayList<>();
         for (int i = 0; i < size; i++){
+            //todo циклом по нодам
             if (accounts[i] instanceof Credit){
-                credits[countCredits] = (Credit) accounts[i];
-                countCredits++;
+                credits.add((Credit) accounts[i]);
             }
         }
-        return credits;
+        if (credits.size() != 0){
+            Credit[] creditsOut = new Credit[credits.size()];
+            for (int i = 0; i < credits.size(); i++)
+                creditsOut[i] = credits.get(i);
+            return creditsOut;
+        }
+        return null;
     }
 
 
