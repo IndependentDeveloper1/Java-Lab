@@ -135,20 +135,22 @@ public class AccountManager {
     }
 
     public Client[] getDebtors(){
-        //todo те клиенты, у которых есть кредит (хоть один)
+        Client[] debtors;
+        //todo возвращаем массив ТОЛЬКО тех клиентов, у которых есть кредит
         for (int i = 0; i < size; i++){
-            if (clients[i].getCreditAccounts() != null)
-                return clients;
+            if (clients[i].hasCredit())
+
         }
-        return null;
+        return debtors;
     }
 
     public Client[] getWickedDebtors(){
-        if (getDebtors() != null){
+        Client[] wickedDebtors;
+        //todo возвращаем массив ТОЛЬКО тех клиентов, у которых есть кредит и их статус BAD
             for (int i = 0; i < size; i++){
-                if (clients[i].getStatus() == ClientStatus.BAD) return clients;
+                if (clients[i].hasCredit() && clients[i].getStatus() == ClientStatus.BAD)
+
             }
-        }
-        return null;
+        return wickedDebtors;
     }
 }

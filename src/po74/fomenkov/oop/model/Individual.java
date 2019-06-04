@@ -164,18 +164,17 @@ public class Individual implements Client {
     public Credit[] getCreditAccounts() {
         ArrayList<Credit> credits = new ArrayList<>();
         for (int i = 0; i < size; i++){
-            //todo циклом по нодам
             if (accounts[i] instanceof Credit){
                 credits.add((Credit) accounts[i]);
             }
         }
-        if (credits.size() != 0){
-            Credit[] creditsOut = new Credit[credits.size()];
-            for (int i = 0; i < credits.size(); i++)
-                creditsOut[i] = credits.get(i);
-            return creditsOut;
-        }
-        return null;
+        return (Credit[]) credits.toArray();
+    }
+
+    @Override
+    public boolean hasCredit() {
+        //todo пройдись по массиву до первого кредита (аналогично в Entity)
+        return false;
     }
 
 

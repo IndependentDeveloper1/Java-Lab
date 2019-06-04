@@ -250,21 +250,26 @@ public class Entity implements Client{
         ArrayList<Credit> credits = new ArrayList<>();
         Node currentNode = head.next;
         for (int i = 0; i < size; i++){
-        //todo циклом по нодам
             if (currentNode.value instanceof Credit){
                 credits.add( (Credit) currentNode.value);
             }
             currentNode = currentNode.next;
         }
-        if (credits.size() != 0){
-            Credit[] creditsOut = new Credit[credits.size()];
-            for (int i = 0; i < credits.size(); i++)
-                creditsOut[i] = credits.get(i);
-            return creditsOut;
-        }
-        return null;
-
+        return (Credit[]) credits.toArray();
     }
+
+    @Override
+    public boolean hasCredit() {
+        Node currentNode = head.next;
+        for (int i = 0; i < size; i++){
+            if (currentNode.value instanceof Credit){
+                return true;
+            }
+            currentNode = currentNode.next;
+        }
+        return false;
+    }
+
 
     @Override
     public int getCreditScores() {
