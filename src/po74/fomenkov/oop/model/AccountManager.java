@@ -1,5 +1,7 @@
 package po74.fomenkov.oop.model;
 
+import java.util.ArrayList;
+
 public class AccountManager {
     private Client[] clients;
     private int size;
@@ -135,22 +137,25 @@ public class AccountManager {
     }
 
     public Client[] getDebtors(){
-        Client[] debtors;
+        ArrayList<Client> debtors = new ArrayList<>();
+        int j = 0;
         //todo возвращаем массив ТОЛЬКО тех клиентов, у которых есть кредит
         for (int i = 0; i < size; i++){
-            if (clients[i].hasCredit())
-
+            if (clients[i].hasCredit()){
+                debtors.add(clients[i]);
+            }
         }
-        return debtors;
+        return (Client[])debtors.toArray();
     }
 
     public Client[] getWickedDebtors(){
-        Client[] wickedDebtors;
+        ArrayList<Client> wickedDebtors = new ArrayList<>();
         //todo возвращаем массив ТОЛЬКО тех клиентов, у которых есть кредит и их статус BAD
             for (int i = 0; i < size; i++){
-                if (clients[i].hasCredit() && clients[i].getStatus() == ClientStatus.BAD)
-
+                if (clients[i].hasCredit() && clients[i].getStatus() == ClientStatus.BAD){
+                    wickedDebtors.add(clients[i]);
+                }
             }
-        return wickedDebtors;
+        return (Client[])wickedDebtors.toArray();
     }
 }

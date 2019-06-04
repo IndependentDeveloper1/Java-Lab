@@ -174,6 +174,10 @@ public class Individual implements Client {
     @Override
     public boolean hasCredit() {
         //todo пройдись по массиву до первого кредита (аналогично в Entity)
+        for (int i = 0; i < size; i++) {
+            if (accounts[i] instanceof Credit)
+                return true;
+        }
         return false;
     }
 
