@@ -25,7 +25,7 @@ public class CreditAccount extends AbstractAccount implements Credit {
 
     @Override
     public String toString(){
-        return String.format("Credit account - %1 APR: %2", super.toString(), APR);
+        return String.format("Credit account - %1s APR: %2.2f", super.toString(), APR);
     }
 
     @Override

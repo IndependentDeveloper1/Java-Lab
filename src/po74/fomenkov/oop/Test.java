@@ -201,11 +201,44 @@ public class Test {
         Client[] wickedDebtors = accountManager.getWickedDebtors();
         System.out.println("Name: " + wickedDebtors[0].getName() + " Status: " + wickedDebtors[0].getStatus());
 
+        System.out.println("=--=-=");
+        System.out.println(accountManager.toString());
 
     }
 
     public static void lab4test(){
-
+        Account abstractAccount = new DebitAccount("Debit account",321);
+        Credit credit = new CreditAccount("Credit account", 12.2, 12);
+        Account abstractAccount1 = new DebitAccount("Debit account 1",321);
+        Account abstractAccount2 = new DebitAccount("Debit account 2",987);
+        Account abstractAccount3 = new CreditAccount("Debit account 3",654,20);
+        Account[] accounts = new Account[3];
+        accounts[0] = abstractAccount1;
+        accounts[1] = abstractAccount2;
+        accounts[2] = abstractAccount3;
+        Client clientEntity1 = new Entity("Client entity 1");
+        Client clientEntity2 = new Entity("Client entity 2", accounts);
+        Client clientIndividual1 = new Individual();
+        Client clientIndividual2 = new Individual(3,"Individual 2", 0);
+        Client clientIndividual3 = new Individual(accounts, "Individual 3", -4);
+        clientEntity1.add(abstractAccount);
+        clientEntity1.addCreditScores(12);
+        clientEntity1.setName("Client Adolf");
+        clientEntity1.addCreditScores(-90);
+        Account clientWithCredit = new CreditAccount();
+        clientEntity1.add(clientWithCredit);
+        Credit[] credits = clientEntity1.getCreditAccounts();
+        Client[] clients = new Client[5];
+        clients[0] = clientEntity1;
+        clients[1] = clientEntity2;
+        clients[2] = clientIndividual1;
+        clients[3] = clientIndividual2;
+        clients[4] = clientIndividual3;
+        AccountManager accountManager = new AccountManager(clients);
+        Credit[] creditAccounts1 = clientEntity2.getCreditAccounts();
+        Client[] debtors = accountManager.getDebtors();
+        Client[] wickedDebtors = accountManager.getWickedDebtors();
+        System.out.println(accountManager.toString());
     }
 
 }

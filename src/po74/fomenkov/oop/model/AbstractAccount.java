@@ -37,7 +37,7 @@ public abstract class AbstractAccount implements Account,Cloneable{
 
     @Override
     public String toString(){
-        return String.format("number: %1 balance: %2", number, balance);
+        return String.format("number: %1s balance: %2.2f", number, balance);
     }
 
     @Override

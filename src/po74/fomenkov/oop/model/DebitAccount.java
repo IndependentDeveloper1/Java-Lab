@@ -11,7 +11,7 @@ public class DebitAccount extends AbstractAccount {
 
     @Override
     public String toString(){
-        return String.format("Debit account - %1", super.toString());
+        return String.format("Debit account - %1s", super.toString());
     }
 
     @Override

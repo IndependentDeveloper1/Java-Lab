@@ -38,4 +38,6 @@ public interface Client {
     boolean remove(Account account);
     int indexOf(Account account);
     double debtTotal();
+    @Override
+    String toString();
 }

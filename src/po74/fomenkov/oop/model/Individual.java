@@ -184,11 +184,11 @@ public class Individual implements Client, Cloneable {
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("Client\nname:%1\ncreditScore: %2\n", name, creditScores));
+        builder.append(String.format("Client\nname:%1s\ncreditScore: %2d\n", name, creditScores));
         for (int i = 0; i < size; i++) {
-            builder.append(String.format("%1\n",accounts[i].toString()));
+            builder.append(String.format("%1s\n",accounts[i].toString()));
         }
-        builder.append(String.format("total: %1", totalBalance()));
+        builder.append(String.format("total: %1.2f", totalBalance()));
         return builder.toString();
     }
 

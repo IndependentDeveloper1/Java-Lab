@@ -249,15 +249,19 @@ public class Entity implements Client, Cloneable{
 
     @Override
     public Credit[] getCreditAccounts() {
-        ArrayList<Credit> credits = new ArrayList<>();
+        ArrayList<Credit> creditsList = new ArrayList<>();
         Node currentNode = head.next;
         for (int i = 0; i < size; i++){
             if (currentNode.value instanceof Credit){
-                credits.add( (Credit) currentNode.value);
+                creditsList.add( (Credit) currentNode.value);
             }
             currentNode = currentNode.next;
         }
-        return (Credit[]) credits.toArray();
+        Credit[] credits = new Credit[creditsList.size()];
+        for (int i = 0; i < creditsList.size(); i++) {
+            credits[i] = creditsList.get(i);
+        }
+        return credits;
     }
 
     @Override
@@ -286,13 +290,13 @@ public class Entity implements Client, Cloneable{
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("Client\nname:%1\ncreditScore: %2\n", name, creditScores));
+        builder.append(String.format("Client\nname:%1s\ncreditScore: %2d\n", name, creditScores));
         Node node = head.next;
         for (int i = 0; i < size; i++) {
-            builder.append(String.format("%1\n",node.value.toString()));
+            builder.append(String.format("%1s\n",node.value.toString()));
             node = node.next;
         }
-        builder.append(String.format("total: %1", totalBalance()));
+        builder.append(String.format("total: %1.2f", totalBalance()));
         return builder.toString();
     }
 

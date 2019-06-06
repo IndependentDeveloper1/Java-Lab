@@ -145,7 +145,11 @@ public class AccountManager {
                 debtors.add(clients[i]);
             }
         }
-        return (Client[])debtors.toArray();
+        Client[] clients = new Client[debtors.size()];
+        for (int i = 0; i < debtors.size(); i++) {
+            clients[i] = debtors.get(i);
+        }
+        return clients;
     }
 
     public Client[] getWickedDebtors(){
@@ -156,14 +160,18 @@ public class AccountManager {
                     wickedDebtors.add(clients[i]);
                 }
             }
-        return (Client[])wickedDebtors.toArray();
+            Client[] debtors = new Client[wickedDebtors.size()];
+            for (int i = 0; i < wickedDebtors.size(); i++) {
+                debtors[i] = wickedDebtors.get(i);
+            }
+        return debtors;
     }
 
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < size; i++) {
-            builder.append(String.format("%1\n",clients[i].toString()));
+            builder.append(String.format("%1s\n",clients[i].toString()));
         }
         return builder.toString();
     }
