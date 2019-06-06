@@ -1,6 +1,6 @@
 package po74.fomenkov.oop.model;
 
-public abstract class AbstractAccount implements Account{
+public abstract class AbstractAccount implements Account,Cloneable{
     private String number;
     private double balance;
     protected final static String NUMBER_DEFAULT = "";
@@ -33,5 +33,28 @@ public abstract class AbstractAccount implements Account{
     @Override
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("number: %1 balance: %2", number, balance);
+    }
+
+    @Override
+    public int hashCode() {
+        return (System.identityHashCode(number) * System.identityHashCode(balance));
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj.getClass().equals(this)){
+            if (this.hashCode() == obj.hashCode()) return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

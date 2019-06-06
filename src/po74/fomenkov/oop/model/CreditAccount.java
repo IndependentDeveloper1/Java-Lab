@@ -22,4 +22,24 @@ public class CreditAccount extends AbstractAccount implements Credit {
     public void setAPR(double APR) {
         this.APR = APR;
     }
+
+    @Override
+    public String toString(){
+        return String.format("Credit account - %1 APR: %2", super.toString(), APR);
+    }
+
+    @Override
+    public int hashCode(){
+        return (71 * super.hashCode());
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        return (super.equals(obj) && obj.hashCode() == this.hashCode());
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

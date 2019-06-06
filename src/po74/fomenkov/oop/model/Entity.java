@@ -4,7 +4,7 @@ package po74.fomenkov.oop.model;
 import java.net.SocketOption;
 import java.util.ArrayList;
 
-public class Entity implements Client{
+public class Entity implements Client, Cloneable{
     private String name;
     private int size;
     private Node head;
@@ -121,6 +121,8 @@ public class Entity implements Client{
     private Node removeNode(String accountNumber){
         return removeNode(getIndex(accountNumber));
     }
+
+
 
     private int getIndex(String accountNumber){
             Node node = head.next;
@@ -280,4 +282,55 @@ public class Entity implements Client{
     public void addCreditScores(int creditScores) {
         this.creditScores += creditScores;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("Client\nname:%1\ncreditScore: %2\n", name, creditScores));
+        Node node = head.next;
+        for (int i = 0; i < size; i++) {
+            builder.append(String.format("%1\n",node.value.toString()));
+            node = node.next;
+        }
+        builder.append(String.format("total: %1", totalBalance()));
+        return builder.toString();
+    }
+
+    @Override
+    public int hashCode(){
+        int totalHashCodeClients = 0;
+        Node currentNode = head.next;
+        for (int i = 0; i < size; i++) {
+            totalHashCodeClients += currentNode.value.hashCode();
+            currentNode = currentNode.next;
+        }
+        return (totalHashCodeClients ^ name.hashCode() ^ System.identityHashCode(creditScores));
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        return (obj.getClass().equals(super.getClass()) && this.hashCode() == obj.hashCode());
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
+    }
+
+    @Override
+    public int indexOf(Account account) {
+        return getIndex(account.getNumber());
+    }
+
+    @Override
+    public double debtTotal() {
+        if (totalBalance() < 0) return (Math.abs(totalBalance()));
+        return 0;
+    }
+
+    @Override
+    public boolean remove(Account account) {
+        return (remove(indexOf(account)) != null);
+    }
+
 }

@@ -2,7 +2,7 @@ package po74.fomenkov.oop.model;
 
 import java.util.ArrayList;
 
-public class Individual implements Client {
+public class Individual implements Client, Cloneable {
     private int size;
     private Account[] accounts;
     private String name;
@@ -181,5 +181,50 @@ public class Individual implements Client {
         return false;
     }
 
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("Client\nname:%1\ncreditScore: %2\n", name, creditScores));
+        for (int i = 0; i < size; i++) {
+            builder.append(String.format("%1\n",accounts[i].toString()));
+        }
+        builder.append(String.format("total: %1", totalBalance()));
+        return builder.toString();
+    }
+
+    @Override
+    public int hashCode(){
+        int totalHashCodeClients = 0;
+        for (int i = 0; i < size; i++) {
+            totalHashCodeClients += accounts[i].hashCode();
+        }
+        return (totalHashCodeClients ^ name.hashCode() ^ System.identityHashCode(creditScores));
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        return (obj.getClass().equals(super.getClass()) && this.hashCode() == obj.hashCode());
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
+    }
+
+    @Override
+    public boolean remove(Account account) {
+        return (remove(indexOf(account)) != null);
+    }
+
+    @Override
+    public int indexOf(Account account) {
+        return indexOf(account.getNumber());
+    }
+
+    @Override
+    public double debtTotal() {
+        if (totalBalance() < 0) return Math.abs(totalBalance());
+        return 0;
+    }
 
 }

@@ -35,4 +35,7 @@ public interface Client {
     }
     Credit[] getCreditAccounts();
     boolean hasCredit();
+    boolean remove(Account account);
+    int indexOf(Account account);
+    double debtTotal();
 }

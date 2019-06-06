@@ -158,4 +158,26 @@ public class AccountManager {
             }
         return (Client[])wickedDebtors.toArray();
     }
+
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            builder.append(String.format("%1\n",clients[i].toString()));
+        }
+        return builder.toString();
+    }
+
+    public boolean remove(Client client){
+        return (remove(indexOf(client)) != null);
+    }
+
+    public int indexOf(Client client){
+        for (int i = 0; i < size; i++) {
+            if (clients[i].equals(client)) return i;
+        }
+        return -1;
+    }
+
+
 }
