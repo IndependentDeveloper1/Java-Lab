@@ -7,7 +7,7 @@ import java.lang.ref.Cleaner;
 
 public class Test {
     public static void main(String[] args) {
-        lab4test();
+        lab5test();
     }
 
 
@@ -241,5 +241,8 @@ public class Test {
         System.out.println(accountManager.toString());
     }
 
+    public static void lab5test(){
+
+    }
 }
 
