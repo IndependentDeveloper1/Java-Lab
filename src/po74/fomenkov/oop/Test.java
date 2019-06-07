@@ -3,6 +3,7 @@ package po74.fomenkov.oop;
 import po74.fomenkov.oop.model.*;
 
 import java.lang.ref.Cleaner;
+import java.time.LocalDate;
 
 
 public class Test {
@@ -242,7 +243,7 @@ public class Test {
     }
 
     public static void lab5test(){
-
+        System.out.println(LocalDate.now());
     }
 }
 
